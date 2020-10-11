@@ -1,0 +1,43 @@
+@import 'variables';
+
+@mixin media-sm {
+    @media (min-width: $sm) {
+        @content;
+    }
+}
+@mixin media-md {
+    @media (min-width: $md) {
+        @content;
+    }
+}
+@mixin media-lg {
+    @media (min-width: $lg) {
+        @content;
+    }
+}
+@mixin media-xl {
+    @media (min-width: $xl) {
+        @content;
+    }
+}
+
+@mixin media-max-sm {
+    @media (max-width: $max-sm) {
+        @content;
+    }
+}
+@mixin media-max-md {
+    @media (max-width: $max-md) {
+        @content;
+    }
+}
+@mixin media-max-lg {
+    @media (max-width: $max-lg) {
+        @content;
+    }
+}
+@mixin media-max-xl {
+    @media (max-width: $max-xl) {
+        @content;
+    }
+}

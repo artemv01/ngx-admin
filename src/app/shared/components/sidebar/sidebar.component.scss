@@ -1,0 +1,20 @@
+@mixin md-icon-size($size: 24px) {
+    font-size: $size;
+    height: $size;
+    width: $size;
+    line-height: $size;
+}
+@import '/src/styles/colors';
+mat-nav-list a {
+    color: #a8a8a8;
+
+    mat-icon {
+        margin-right: 15px;
+    }
+}
+mat-nav-list a:hover {
+    color: black;
+    mat-icon {
+        color: $c-primary;
+    }
+}

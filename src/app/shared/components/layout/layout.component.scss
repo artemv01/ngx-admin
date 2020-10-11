@@ -1,0 +1,47 @@
+@import '/src/styles/colors';
+.layout {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.is-mobile .top-bar {
+    position: fixed;
+    z-index: 2;
+}
+
+h1.app-name {
+    margin-left: 8px;
+}
+
+mat-sidenav-container {
+    flex: 1;
+    margin: 0;
+
+    .sidenav-content {
+        margin: 32px 24px 32px;
+    }
+}
+mat-sidenav {
+    width: 180px;
+}
+.is-mobile mat-sidenav-container {
+    flex: 1 0 auto;
+}
+
+.main-title {
+    display: flex;
+    align-items: center;
+    h1 {
+        margin-left: 2rem;
+    }
+}
+button.toggle-menu-btn {
+    background-color: transparent !important;
+    box-shadow: none;
+    color: $c-top-header-icon;
+}

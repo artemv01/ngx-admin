@@ -1,0 +1,116 @@
+@import 'styles/colors';
+
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// The warn palette is optional (defaults to red).
+$ngx-admin-warn: mat-palette($mat-red);
+
+$ngx-admin-accent: (
+    50: $c-accent,
+    100: $c-accent,
+    200: $c-accent,
+    300: $c-accent,
+    400: $c-accent,
+    500: $c-accent,
+    600: $c-accent,
+    700: $c-accent,
+    800: $c-accent,
+    900: $c-accent,
+    A100: $c-accent,
+    A200: $c-accent,
+    A400: $c-accent,
+    A700: $c-accent,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $light-primary-text,
+        A700: $light-primary-text,
+    ),
+);
+
+$ngx-admin-primary: (
+    50: $c-primary,
+    100: $c-primary,
+    200: $c-primary,
+    300: $c-primary,
+    400: $c-primary,
+    500: $c-primary,
+    600: $c-primary,
+    700: $c-primary,
+    800: $c-primary,
+    900: $c-primary,
+    A100: $c-primary,
+    A200: $c-primary,
+    A400: $c-primary,
+    A700: $c-primary,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $light-primary-text,
+        A700: $light-primary-text,
+    ),
+);
+
+$ngx-admin-primary: mat-palette($ngx-admin-primary);
+$ngx-admin-accent: mat-palette($ngx-admin-accent);
+$ngx-admin-warn: mat-palette($mat-red);
+$ngx-admin-theme: mat-light-theme($ngx-admin-primary, $ngx-admin-accent, $ngx-admin-warn);
+@include angular-material-theme($ngx-admin-theme);
+
+.mat-display-1 {
+    color: $c-head;
+}
+
+.material-icons {
+    font-size: 28px;
+    padding-bottom: 5px;
+    padding-right: 3px;
+}
+button.mat-mini-fab {
+    height: 36px;
+    width: 36px;
+    .mat-button-wrapper {
+        padding: 0;
+    }
+}
+
+mat-toolbar.page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 24px 32px 0;
+    background: none;
+    height: auto;
+    h1 {
+        font-weight: 400;
+        font-size: 38.4px;
+        color: #b9b9b9;
+        line-height: 1;
+        letter-spacing: -0.2186px;
+    }
+}

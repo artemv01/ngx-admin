@@ -1,0 +1,68 @@
+<app-layout>
+    <mat-card>
+        <form>
+            <mat-form-field appearance="standard">
+                <mat-toolbar class="page-header">
+                    <h1>Products</h1>
+                </mat-toolbar>
+                <input required
+                    matInput
+                    placeholder="Product name">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>Product description</mat-label>
+                <textarea requried
+                    rows="20"
+                    matInput
+                    placeholder="Product description"></textarea>
+            </mat-form-field>
+            <div class="prices">
+                <mat-form-field>
+                    <mat-label>Price</mat-label>
+
+                    <input required
+                        matInput
+                        type="number"
+                        placeholder="Price">
+                    <span matPrefix>$&nbsp;</span>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Sale price</mat-label>
+
+                    <input matInput
+                        type="number"
+                        placeholder="Sale price">
+                    <span matPrefix>$&nbsp;</span>
+                </mat-form-field>
+            </div>
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #productTags
+                    aria-label="Select product tags">
+                    <mat-chip *ngFor="let tag of usedTags"
+                        [selectable]="true"
+                        [removable]="true"
+                        (removed)="remove(tag.id)">
+                        {{tag.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="New fruit..."
+                        #tagsInput="ngModel"
+                        ngModel
+                        name="tagsInput"
+                        [matAutocomplete]="tagsAutocomplete"
+                        [matChipInputFor]="productTags"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-autocomplete #tagsAutocomplete="matAutocomplete"
+                    autoActiveFirstOption
+                    (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let tag of filterTags$ | async"
+                        [value]="tag.id">
+                        {{tag.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</app-layout>

@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css';
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.page-wrapper {
+    width: 100%;
+    max-width: 62rem;
+    margin: 60px 32px;
+}
+
+.spinner-container {
+    background: white;
+    padding: 64px 0;
+    display: flex;
+    justify-content: center;
+}

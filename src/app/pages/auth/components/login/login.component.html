@@ -1,0 +1,59 @@
+<app-auth-layout>
+    <div class="login-container">
+        <h1 class="mat-display-1">Login</h1>
+        <div *ngIf="loading"
+            class="spinner-container">
+            <mat-spinner mode="indeterminate"
+                color="primary"
+                aria-label="login spinner"></mat-spinner>
+        </div>
+        <form *ngIf="!loading"
+            (submit)="login()"
+            [formGroup]="loginForm">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput
+                    required
+                    formControlName="email"
+                    placeholder="johndoe@example.com"
+                    type="text">
+                <button *ngIf="email.value"
+                    mat-button
+                    mat-icon-button
+                    matSuffix
+                    aria-label="Clear"
+                    (click)="email.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="email.hasError('email')">Please enter a valid email.</mat-error>
+                <mat-error *ngIf="email.hasError('required')">Email is required.</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput
+                    type="email"
+                    required
+                    formControlName="password"
+                    placeholder="********"
+                    minlength="8"
+                    type="text">
+                <mat-hint>Password must be at least 8 characters.</mat-hint>
+                <button *ngIf="password.value"
+                    mat-button
+                    mat-icon-button
+                    matSuffix
+                    aria-label="Clear"
+                    (click)="password.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="password.hasError('required')">Password is required.</mat-error>
+                <mat-error *ngIf="password.hasError('minlength')">Password must be at least 8
+                    characters.</mat-error>
+            </mat-form-field>
+            <button mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="loginForm.invalid">Submit</button>
+        </form>
+    </div>
+</app-auth-layout>

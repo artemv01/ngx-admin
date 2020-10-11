@@ -1,0 +1,30 @@
+<div class="layout"
+    [class.is-mobile]="mobileQuery.matches">
+    <mat-toolbar color="primary"
+        class="top-bar">
+        <div class="main-title">
+            <button mat-mini-fab
+                class="toggle-menu-btn"
+                (click)="sidebarOpen = sidebarOpen ? false : true">
+                <mat-icon *ngIf="sidebarOpen">menu</mat-icon>
+                <mat-icon *ngIf="!sidebarOpen">arrow_back</mat-icon>
+            </button>
+            <h1 class="app-name">Admin Panel</h1>
+        </div>
+    </mat-toolbar>
+
+    <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav
+            [opened]="sidebarOpen"
+            [mode]="mobileQuery.matches ? 'over' : 'side'"
+            [fixedInViewport]="mobileQuery.matches"
+            fixedTopGap="56">
+            <app-sidebar></app-sidebar>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="sidenav-content">
+                <ng-content></ng-content>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
