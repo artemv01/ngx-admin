@@ -17,12 +17,23 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
+import { MatRippleModule } from '@angular/material/core';
+import { ImageDropComponent } from './components/image-drop/image-drop.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 @NgModule({
-  declarations: [LayoutComponent, ItemsTableComponent, SidebarComponent],
+  declarations: [
+    LayoutComponent,
+    ItemsTableComponent,
+    SidebarComponent,
+    ImageDropComponent,
+    NotificationsComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
@@ -36,7 +47,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatButtonModule,
     MatCardModule,
+    MatRippleModule,
   ],
-  exports: [LayoutComponent, ItemsTableComponent],
+  exports: [LayoutComponent, ItemsTableComponent, ImageDropComponent],
 })
 export class SharedModule {}

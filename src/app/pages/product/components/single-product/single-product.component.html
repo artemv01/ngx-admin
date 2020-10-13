@@ -1,68 +1,118 @@
 <app-layout>
+    <mat-toolbar class="page-header">
+        <h1>{{productId ? 'Edit' : 'Add'}} Product</h1>
+    </mat-toolbar>
     <mat-card>
-        <form>
-            <mat-form-field appearance="standard">
-                <mat-toolbar class="page-header">
-                    <h1>Products</h1>
-                </mat-toolbar>
+        <div class="spinner-container"
+            *ngIf="loading.display$ | async">
+            <mat-spinner></mat-spinner>
+        </div>
+        <form class="product-form"
+            *ngIf="!(loading.display$ | async)"
+            (submit)="productId ? editProduct() : addProduct()"
+            [formGroup]="productForm">
+            <mat-form-field>
+                <mat-label>Product name</mat-label>
+
                 <input required
+                    formControlName="name"
                     matInput
                     placeholder="Product name">
+                <mat-error *ngIf="name.hasError('required')">Product name is required.</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="standard">
+            <mat-form-field>
                 <mat-label>Product description</mat-label>
                 <textarea requried
-                    rows="20"
+                    formControlName="description"
+                    rows="10"
                     matInput
                     placeholder="Product description"></textarea>
+
             </mat-form-field>
-            <div class="prices">
+            <mat-slide-toggle class="onsale-toggle"
+                formControlName="onSale">
+                <span class="text-note">On sale</span>
+            </mat-slide-toggle>
+            <div class="prices-wrap">
                 <mat-form-field>
                     <mat-label>Price</mat-label>
 
                     <input required
+                        formControlName="price"
                         matInput
-                        type="number"
-                        placeholder="Price">
-                    <span matPrefix>$&nbsp;</span>
+                        placeholder="0.00">
+                    <span matSuffix>$&nbsp;</span>
+                    <mat-error *ngIf="price.hasError('required')">Product price name is required.
+                    </mat-error>
+
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Sale price</mat-label>
 
                     <input matInput
-                        type="number"
+                        formControlName="salePrice"
                         placeholder="Sale price">
-                    <span matPrefix>$&nbsp;</span>
+                    <span matSuffix>$&nbsp;</span>
+                    <mat-error *ngIf="salePrice.hasError('salePriceRequired')">Sale price is
+                        required
+                        when On Sale switch is ON.</mat-error>
+                    <mat-error *ngIf="salePrice.hasError('pattern')">Sale price can only be a
+                        number.
+                    </mat-error>
                 </mat-form-field>
             </div>
-            <mat-form-field class="example-chip-list">
+            <div class="image-upload-wrap">
+                <app-image-drop [imageControl]="image"
+                    [initSrc]="initImageSrc"></app-image-drop>
+                <mat-error *ngIf="image.hasError('required')">Product image is required.
+                </mat-error>
+            </div>
+            <mat-form-field>
                 <mat-chip-list #productTags
                     aria-label="Select product tags">
-                    <mat-chip *ngFor="let tag of usedTags"
-                        [selectable]="true"
-                        [removable]="true"
-                        (removed)="remove(tag.id)">
-                        {{tag.name}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input placeholder="New fruit..."
-                        #tagsInput="ngModel"
-                        ngModel
-                        name="tagsInput"
-                        [matAutocomplete]="tagsAutocomplete"
+                    <ng-container *ngFor="let cat of addedCategories; let i= index;">
+                        <mat-chip *ngIf="!cat.toDelete"
+                            [selectable]="true"
+                            [removable]="true"
+                            (removed)="removeCategory(i)">
+                            {{cat.name}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </ng-container>
+                    <input placeholder="New category..."
+                        [formControl]="catsInput"
+                        name="catInput"
+                        [matAutocomplete]="catAutocomplete"
                         [matChipInputFor]="productTags"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="add($event)">
+                        (matChipInputTokenEnd)="createCategory($event)">
                 </mat-chip-list>
-                <mat-autocomplete #tagsAutocomplete="matAutocomplete"
+                <mat-autocomplete #catAutocomplete="matAutocomplete"
                     autoActiveFirstOption
-                    (optionSelected)="selected($event)">
-                    <mat-option *ngFor="let tag of filterTags$ | async"
-                        [value]="tag.id">
-                        {{tag.name}}
+                    (optionSelected)="addCategoryToProduct($event)">
+                    <mat-option *ngFor="let cat of filterCats$ | async"
+                        [value]="cat._id">
+                        {{cat.name}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
+            <div class="bottom-buttons">
+                <button mat-flat-button
+                    (click)="location.back()"
+                    class="icon-button"
+                    color="accent"
+                    type="button">
+                    <mat-icon>arrow_back</mat-icon>
+                    Back
+                </button>
+                <button mat-flat-button
+                    class="icon-button"
+                    color="primary"
+                    type="submit">
+                    <mat-icon>{{productId ? 'edit' : 'save'}}</mat-icon>
+                    {{productId ? 'Edit' : 'Add'}}
+                </button>
+            </div>
         </form>
     </mat-card>
 </app-layout>

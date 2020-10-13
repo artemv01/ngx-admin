@@ -8,6 +8,9 @@
     max-width: 100%;
     overflow-x: auto;
 }
+.items-actions {
+    margin: 1rem 0;
+}
 .search-container,
 .bulk-select {
     width: 100%;
@@ -23,4 +26,14 @@
 
 .bulk-select {
     margin-right: 1rem;
+}
+
+.ripple {
+    cursor: pointer;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
 }

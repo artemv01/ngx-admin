@@ -1,0 +1,17 @@
+<div id="notifications">
+    <div (click)="notify.close(notification.key)"
+        *ngFor="let notification of (notify.emitter$ | async); let i = index;"
+        class="notification"
+        [@slide]>
+        <div class="notification-content"
+            [class]="typeMap[notification.type]">
+            <div class="notification-icon">
+                <mat-icon>
+                    {{iconMap[notification.type]}}</mat-icon>
+                <span>{{messageMap[notification.type]}}</span>
+            </div> <span class="message"
+                [innerHtml]="notification.message"></span>
+
+        </div>
+    </div>
+</div>

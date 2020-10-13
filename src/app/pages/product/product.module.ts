@@ -14,8 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
-import { handleErrorProvider } from 'src/app/shared/helpers/handle-error';
+import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [ProductsComponent, SingleProductComponent],
@@ -35,6 +36,9 @@ import { handleErrorProvider } from 'src/app/shared/helpers/handle-error';
     MatIconModule,
     MatAutocompleteModule,
     MatToolbarModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    DragDropModule,
   ],
 })
 export class ProductModule {}

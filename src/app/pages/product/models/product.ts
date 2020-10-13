@@ -1,5 +1,12 @@
-export class Product {
-  _id: string;
+export interface Category {
+  _id?: string;
+  name: string;
+  toDelete?: boolean;
+  isNew?: boolean;
+}
+
+export interface Product {
+  _id?: string;
   name: string;
   description: string;
   price: number;
@@ -9,4 +16,7 @@ export class Product {
   ratingCount: number;
   image: string;
   relatedProducts: string[];
+  categories?: Category[];
+  allCategories?: Category[];
+  category: Category;
 }

@@ -12,7 +12,9 @@ mat-nav-list a {
         margin-right: 15px;
     }
 }
-mat-nav-list a:hover {
+mat-nav-list a:hover,
+mat-nav-list a.item-active {
+    background-color: #f5f5f5;
     color: black;
     mat-icon {
         color: $c-primary;

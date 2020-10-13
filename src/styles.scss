@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~normalize.css';
 
+[hidden] {
+    display: none !important;
+}
+
 html,
 body {
     height: 100%;
@@ -20,4 +24,31 @@ body {
     padding: 64px 0;
     display: flex;
     justify-content: center;
+}
+
+.bottom-buttons {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    button {
+        max-width: 12rem;
+        min-width: 9rem;
+    }
+}
+
+.icon-button {
+    .mat-button-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    mat-icon {
+        margin-right: 0.25rem;
+    }
+}
+.text-note {
+    opacity: 0.6;
 }

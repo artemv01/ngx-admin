@@ -1,4 +1,7 @@
 <mat-card>
+    <div class="items-actions">
+        <ng-content></ng-content>
+    </div>
     <mat-form-field class="bulk-select">
         <mat-label>Bulk actions</mat-label>
         <mat-select #selAction="ngModel"
@@ -82,7 +85,10 @@
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            <mat-row class="ripple "
+                *matRowDef="let row; columns: displayedColumns"
+                [routerLink]="['/dashboard', 'products', 'edit', row._id]"
+                matRipple></mat-row>
 
         </mat-table>
     </form>
@@ -91,7 +97,7 @@
         <mat-spinner></mat-spinner>
     </div>
 
-    <mat-paginator [length]="dataSource.data.length"
+    <mat-paginator [length]="dataSource.totalItems"
         [pageSize]="itemsQuery.limit"
         [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
 </mat-card>

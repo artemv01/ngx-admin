@@ -1,0 +1,85 @@
+@import '/src/styles/support';
+@import '/src/styles/colors';
+@import '~@angular/material/theming';
+
+#notifications {
+    width: calc(100% - 2rem);
+    max-width: 30rem;
+    opacity: 0.9;
+    position: fixed;
+    right: 1.5rem;
+    top: 1.5rem;
+    z-index: 500;
+}
+
+.notification {
+    cursor: pointer;
+    display: flex;
+    position: relative;
+
+    & > div {
+        border-left: 12px solid;
+        border-radius: 4px;
+        padding: 12px;
+        text-overflow: break-word;
+    }
+    & > div.bg-bgSuccess {
+        background-color: $c-success;
+        border-color: $c-success-dark;
+    }
+    & > div.bg-bgInfo {
+        background-color: $c-info;
+        border-color: $c-info-dark;
+    }
+    & > div.bg-bgDanger {
+        background-color: $c-warn;
+        border-color: $c-warn-dark;
+    }
+
+    @media screen and (min-width: 768px) {
+        .message {
+            max-width: 70%;
+        }
+    }
+}
+
+.notification-content {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    border-radius: 3px;
+    @include media-md {
+        align-items: center;
+        flex-flow: row;
+    }
+}
+.notification-icon {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    @include media-md {
+        margin-bottom: 0;
+    }
+}
+
+mat-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+    color: white;
+}
+.mat-icon + span {
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+    padding-left: 6px;
+    padding-right: 12px;
+}
+
+.message {
+    color: white;
+}

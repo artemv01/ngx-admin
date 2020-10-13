@@ -137,14 +137,14 @@ export class ItemsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.items.length;
+    const numRows = this.dataSource.data.length;
     return numSelected == numRows;
   }
 
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.items.forEach((row) => this.selection.select(row));
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
   //   callBulkAction({ value }) {

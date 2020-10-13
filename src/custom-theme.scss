@@ -87,11 +87,15 @@ $ngx-admin-theme: mat-light-theme($ngx-admin-primary, $ngx-admin-accent, $ngx-ad
     color: $c-head;
 }
 
-.material-icons {
-    font-size: 28px;
-    padding-bottom: 5px;
-    padding-right: 3px;
+mat-toolbar,
+mat-sidenav {
+    .material-icons {
+        font-size: 28px;
+        padding-bottom: 5px;
+        padding-right: 3px;
+    }
 }
+
 button.mat-mini-fab {
     height: 36px;
     width: 36px;

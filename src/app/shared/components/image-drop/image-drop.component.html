@@ -1,0 +1,35 @@
+<div (click)="imageLoading ? null : imageInputElement.click(); imageLoading=true;"
+    (dragenter)="onDragEnter($event)"
+    (dragover)="$event.stopPropagation(); $event.preventDefault()"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    class="drop-container"
+    [class.border-dashed]="!dragBorder"
+    [class.border-solid]="dragBorder">
+    <input type="file"
+        id="upload_prod_img"
+        #imageInputElement
+        (change)="handleImageUpload($event)"
+        [formControl]="imageControl">
+    <div *ngIf="!isImageUploaded"
+        class="image-drop-content">
+        <div>
+            <mat-icon>insert_photo</mat-icon>
+        </div>
+        <div style="margin-bottom: .5rem">Drop image here</div>
+        <div style="margin-bottom: .5rem">or</div>
+        <button mat-flat-button
+            style="margin-bottom: .5rem;"
+            color="primary"
+            type="submit">Browse files</button>
+    </div>
+    <img #productImg
+        [hidden]="!isImageUploaded"
+        [src]="initSrc"
+        alt="product image">
+
+</div>
+<div class="form-err-container"
+    *ngIf="imageTypeErr">
+    Available file types are: *.jpeg, *.png
+</div>

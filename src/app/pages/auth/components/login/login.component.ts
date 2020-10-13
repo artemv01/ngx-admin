@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.auth.autoLogout(userData.expires_in);
         localStorage.setItem('userData', JSON.stringify(user));
 
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/products']);
       },
       (err) => {
         this.loginForm.reset();

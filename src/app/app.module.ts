@@ -14,8 +14,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { handleErrorProvider } from './shared/helpers/handle-error';
+import { AuthInterceptor } from './pages/auth/auth.interceptor';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -35,7 +36,14 @@ import { handleErrorProvider } from './shared/helpers/handle-error';
     HttpClientModule,
     MatSnackBarModule,
   ],
-  providers: [handleErrorProvider],
+  providers: [
+    handleErrorProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

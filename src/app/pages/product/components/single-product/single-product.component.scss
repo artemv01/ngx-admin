@@ -1,0 +1,29 @@
+@import '/src/styles/support';
+mat-card {
+    max-width: 930px;
+}
+.product-form {
+    display: flex;
+    flex-flow: column;
+}
+.prices-wrap {
+    display: flex;
+    flex-flow: column;
+    @include media-md {
+        flex-flow: row;
+        mat-form-field {
+            flex: 1 1 100%;
+        }
+        mat-form-field:first-child {
+            margin-right: 1rem;
+        }
+    }
+}
+.onsale-toggle {
+    padding-bottom: 1.34375em;
+    user-select: none;
+}
+
+.image-upload-wrap {
+    margin: 2rem 0;
+}

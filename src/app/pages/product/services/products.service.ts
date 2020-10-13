@@ -7,7 +7,7 @@ import { ItemsResp } from 'src/app/shared/components/items-table/items-resp';
 import { HTTP_ERROR_HANDLER } from 'src/app/shared/helpers/handle-error';
 import { ItemService } from 'src/app/shared/models/item-service';
 import { environment } from 'src/environments/environment';
-import { Product } from '../models/product';
+import { Category, Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +28,57 @@ export class ProductsService implements ItemService<Product> {
       .pipe(
         catchError<ItemsResp<Product>, Observable<any>>((err) =>
           this.handleError(err)
+        )
+      );
+  }
+  getOne(id: string): Observable<Product> {
+    return this.http.get<Product>(environment.apiUrl + `product/${id}`).pipe(
+      catchError<Product, Observable<Product>>((err) => this.handleError(err))
+    );
+  }
+
+  create(data: Product): Observable<Product['_id']> {
+    let form = new FormData();
+    const { categories, category, ...formData } = data;
+    for (const [key, value] of Object.entries(formData)) {
+      form.append(key, data[key]);
+    }
+    form.append('categories', JSON.stringify(categories));
+    return this.http
+      .post<Product['_id']>(environment.apiUrl + `product`, form)
+      .pipe(
+        catchError<Product['_id'], Observable<Product['_id']>>((err) =>
+          this.handleError(err)
+        )
+      );
+  }
+
+  edit(data: Product, productId?: Product['_id']): Observable<void> {
+    let form = new FormData();
+    const { categories, category, ...formData } = data;
+    for (const [key, value] of Object.entries(formData)) {
+      form.append(key, data[key]);
+    }
+    form.append('categories', JSON.stringify(categories));
+    return this.http
+      .patch<void>(environment.apiUrl + `product/${productId}`, form)
+      .pipe(
+        catchError<void, Observable<void>>((err) => this.handleError(err))
+      );
+  }
+
+  getCategories(
+    data: Partial<ItemsQuery> = {}
+  ): Observable<ItemsResp<Category>> {
+    const params = new URLSearchParams();
+    for (const [key, val] of Object.entries(data)) {
+      params.set(key, val as string);
+    }
+    return this.http
+      .get<ItemsResp<Category>>(environment.apiUrl + `category/?${params}`)
+      .pipe(
+        catchError<ItemsResp<Category>, Observable<ItemsResp<Category>>>(
+          (err) => this.handleError(err)
         )
       );
   }

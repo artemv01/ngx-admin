@@ -3,5 +3,11 @@
         <h1>Products</h1>
     </mat-toolbar>
     <app-items-table [bulkActions]="bulkActions"
-        itemsType="products"></app-items-table>
+        itemsType="products"><button [routerLink]="['/dashboard', 'products', 'add']"
+            mat-flat-button
+            class="icon-button"
+            color="primary"
+            type="submit">
+            <mat-icon>add</mat-icon>Add New
+        </button></app-items-table>
 </app-layout>
