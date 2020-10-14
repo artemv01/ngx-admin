@@ -5,6 +5,13 @@ export const routes: NavItem[] = [
     path: '/dashboard/products',
     icon: 'store',
     name: 'Products',
+    children: [
+      {
+        path: '/dashboard/categories',
+        icon: 'label',
+        name: 'Categories',
+      },
+    ],
   },
   {
     path: '/dashboard/orders',

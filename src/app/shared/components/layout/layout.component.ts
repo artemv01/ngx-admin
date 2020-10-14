@@ -1,5 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { routes } from '../sidebar/routes';
 
 /** @title Responsive sidenav */
 @Component({
@@ -10,6 +11,7 @@ import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 export class LayoutComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   sidebarOpen = true;
+  routes = routes;
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {

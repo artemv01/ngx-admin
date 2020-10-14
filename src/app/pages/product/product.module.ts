@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [ProductsComponent, SingleProductComponent],
@@ -39,6 +40,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatCardModule,
     MatSlideToggleModule,
     DragDropModule,
+    MatTableModule,
   ],
 })
 export class ProductModule {}
