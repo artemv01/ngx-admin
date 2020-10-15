@@ -1,21 +1,27 @@
 import {
-  animate,
+  trigger,
   state,
   style,
   transition,
-  trigger,
+  animate,
 } from '@angular/animations';
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { expand } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NavService } from '../../services/nav.service';
 import { NavItem } from './nav-item';
-import { routes } from './routes';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  selector: 'app-nav-item',
+  templateUrl: './nav-item.component.html',
+  styleUrls: ['./nav-item.component.scss'],
   animations: [
     trigger('indicatorRotate', [
       state('collapsed', style({ transform: 'rotate(0deg)' })),
@@ -27,8 +33,9 @@ import { routes } from './routes';
     ]),
   ],
 })
-export class SidebarComponent implements OnInit {
+export class NavItemComponent implements OnInit, OnDestroy {
   expanded: boolean = false;
+  destroy = new Subject();
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item: NavItem;
   @Input() depth: number;
@@ -38,20 +45,27 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.navService.currentUrl.subscribe((url: string) => {
-      /*  if (this.item.path && url) {
-        this.expanded = url.indexOf(`/${this.item.path}`) === 0;
-        this.ariaExpanded = this.expanded;
-      } */
-    });
+    this.navService.currentUrl
+      .pipe(takeUntil(this.destroy))
+      .subscribe((url: string) => {
+        if (this.item.path && url) {
+          this.expanded = url.indexOf(`${this.item.path}`) === 0;
+        }
+        // if (this.item.path && url) {
+        //   this.expanded = url.indexOf(`${this.item.path}`) === 0;
+        //   if (this.expanded) {
+        //   }
+        //   this.ariaExpanded = this.expanded;
+      });
   }
 
   onItemSelected(item: NavItem) {
     this.router.navigate([item.path]);
-    console.log(this.expanded);
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
     }
-    console.log(this.expanded);
+  }
+  ngOnDestroy() {
+    this.destroy.next(null);
   }
 }

@@ -1,0 +1,8 @@
+@import '/src/styles/support';
+mat-card {
+    max-width: 930px;
+}
+form {
+    display: flex;
+    flex-flow: column;
+}

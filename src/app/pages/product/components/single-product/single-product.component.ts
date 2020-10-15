@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -19,8 +19,10 @@ import { ItemsResp } from 'src/app/shared/components/items-table/items-resp';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { Category, Product } from '../../models/product';
+import { Product } from '../../models/product';
+import { Category } from '../../../category/models/category';
 import { ProductsService } from '../../services/products.service';
+import { CategoryService } from 'src/app/pages/category/services/category.service';
 
 export const salePriceRequired: ValidatorFn = (
   control: FormGroup
@@ -90,6 +92,7 @@ export class SingleProductComponent implements OnInit {
     private alert: AlertService,
     public location: Location,
     public loading: LoadingService,
+    public categoryService: CategoryService,
     public notification: NotificationService
   ) {
     this.filterCats$ = this.catsInput.valueChanges.pipe(
@@ -125,23 +128,21 @@ export class SingleProductComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params) => {
       // this.savedStatus = params['status'];
-      if (params['status'] === 'success') {
-        this.notification.push({
-          message: 'Product created!',
-        });
-      }
     });
 
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.productId = params.get('id') === 'add' ? '' : params.get('id');
       if (this.productId) {
         this._getProduct();
+      } else {
+        this.loading.show();
+        this.categoryService
+          .getAll()
+          .subscribe((categories: ItemsResp<Category>) => {
+            this.allCategories = categories.items;
+            this.loading.hide();
+          });
       }
-      this.loading.show();
-      this.api.getCategories().subscribe((categories: ItemsResp<Category>) => {
-        this.allCategories = categories.items;
-        this.loading.hide();
-      });
     });
   }
 
@@ -230,7 +231,7 @@ export class SingleProductComponent implements OnInit {
     this.loading.show();
     forkJoin([
       this.api.getOne(this.productId),
-      this.api.getCategories(),
+      this.categoryService.getAll(),
     ]).subscribe(
       ([product, categoryList]) => {
         const { categories, image, ...productData } = product;

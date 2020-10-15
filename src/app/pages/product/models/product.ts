@@ -1,9 +1,4 @@
-export interface Category {
-  _id?: string;
-  name: string;
-  toDelete?: boolean;
-  isNew?: boolean;
-}
+import { Category } from '../../category/models/category';
 
 export interface Product {
   _id?: string;

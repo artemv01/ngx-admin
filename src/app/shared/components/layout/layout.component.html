@@ -20,8 +20,8 @@
             [fixedInViewport]="mobileQuery.matches"
             fixedTopGap="56">
             <mat-nav-list>
-                <app-sidebar *ngFor="let navItem of routes"
-                    [item]="navItem"></app-sidebar>
+                <app-nav-item *ngFor="let navItem of routes"
+                    [item]="navItem"></app-nav-item>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>

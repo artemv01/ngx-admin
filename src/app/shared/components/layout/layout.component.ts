@@ -1,8 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { routes } from '../sidebar/routes';
+import { routes } from '../nav-item/routes';
 
-/** @title Responsive sidenav */
 @Component({
   selector: 'app-layout',
   templateUrl: 'layout.component.html',

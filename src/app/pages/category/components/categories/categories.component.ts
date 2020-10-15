@@ -1,17 +1,13 @@
-import { DataSource, SelectionModel } from '@angular/cdk/collections';
-import { Output } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import {
-  AfterViewInit,
   Attribute,
   Component,
   ElementRef,
-  EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -22,31 +18,28 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
-import { Product } from 'src/app/pages/product/models/product';
-import { ProductsService } from 'src/app/pages/product/services/products.service';
-import { BulkAction } from '../../models/bulk-action';
-import { BulkEvent } from '../../models/bulk-event';
-import { ItemsQuery } from './items-query';
-import { ItemsDataSource } from './items.datasource';
+import { ItemsQuery } from 'src/app/shared/components/items-table/items-query';
+import { ItemsDataSource } from 'src/app/shared/components/items-table/items.datasource';
+import { BulkAction } from 'src/app/shared/models/bulk-action';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { Category } from '../../models/category';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
-  selector: 'app-items-table',
-  templateUrl: './items-table.component.html',
-  styleUrls: ['./items-table.component.scss'],
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.scss'],
 })
-export class ItemsTableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CategoriesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable, { static: true }) table: MatTable<Product>;
+  @ViewChild(MatTable, { static: true }) table: MatTable<Category>;
   @ViewChild('search', { static: true }) searchInput: ElementRef;
   @ViewChild('selAction') selAction: FormControl;
 
-  @Input('bulkActions') bulkActions: BulkAction[] = [];
-  @Output('bulkEvent') bulkEvent: EventEmitter<BulkEvent> = new EventEmitter();
-
   destory = new Subject<null>();
 
-  dataSource: ItemsDataSource<Product>;
+  dataSource: ItemsDataSource<Category>;
   itemsQuery: ItemsQuery = {
     search: '',
     sortOrder: 'asc',
@@ -54,30 +47,26 @@ export class ItemsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     limit: 10,
     page: 1,
   };
-  displayedColumns = [
-    'select',
-    // 'image',
-    'name',
-    'price',
-    'salePrice',
-    'onSale',
-    'rating',
-    'createdAt',
-  ];
+  displayedColumns = ['select', 'name', 'createdAt'];
 
   totalItems: number = 0;
 
-  selection = new SelectionModel<Product>(true, []);
+  selection = new SelectionModel<Category>(true, []);
+
+  bulkActions: BulkAction[] = [
+    {
+      name: 'Delete',
+      value: 'delete',
+    },
+  ];
 
   constructor(
     @Attribute('itemsType') itemsType: string,
-    private productService: ProductsService,
-    private fb: FormBuilder
+    private categoryService: CategoryService,
+    private fb: FormBuilder,
+    private notify: NotificationService
   ) {
-    switch (itemsType) {
-      case 'products':
-        this.dataSource = new ItemsDataSource<Product>(this.productService);
-    }
+    this.dataSource = new ItemsDataSource<Category>(this.categoryService);
     this.dataSource.loadItems(this.itemsQuery);
   }
 
@@ -122,15 +111,16 @@ export class ItemsTableComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((val) => {
         if (!val) return;
         const items = this.selection.selected.map((val) => val._id);
-        this.bulkEvent.emit({
-          action: val,
-          items: items,
+        this.categoryService.delete(items).subscribe(() => {
+          this.notify.push({});
+          this.dataSource.loadItems(this.itemsQuery);
         });
         this.selAction.reset();
       });
   }
 
   loadItemsPage() {
+    // fix for pagination component because it works with pages starting from 0, api starts from 1
     this.itemsQuery.page += 1;
     this.dataSource.loadItems(this.itemsQuery);
   }

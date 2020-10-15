@@ -9,7 +9,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,13 +20,14 @@ import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { ImageDropComponent } from './components/image-drop/image-drop.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { NavItemComponent } from './components/nav-item/nav-item.component';
 @NgModule({
   declarations: [
     LayoutComponent,
     ItemsTableComponent,
-    SidebarComponent,
     ImageDropComponent,
     NotificationsComponent,
+    NavItemComponent,
   ],
   imports: [
     CommonModule,
