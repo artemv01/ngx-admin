@@ -1,0 +1,142 @@
+<app-layout>
+    <div class="container">
+        <mat-toolbar class="page-header">
+            <h1>Edit Order</h1>
+        </mat-toolbar>
+        <div class="spinner-container"
+            *ngIf="loading.display$ | async">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div class="address-wrap">
+            <mat-card class="mat-elevation-z3">
+                <mat-card-title>Shipping Address</mat-card-title>
+
+                <mat-card-content>
+                    <div>{{shippingAddress.first_name}} {{shippingAddress.last_name}}</div>
+                    <div>{{shippingAddress.email}}</div>
+                    <div>{{shippingAddress.address_line1}}</div>
+                    <div>{{shippingAddress.address_line2}}</div>
+                    <div>{{shippingAddress.city}}</div>
+                    <div>{{shippingAddress.state}}</div>
+                    <div>{{shippingAddress.zip}}</div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button
+                        color="primary"
+                        [routerLink]="['shipping']">EDIT</button>
+                </mat-card-actions>
+            </mat-card>
+            <mat-card class="mat-elevation-z3">
+                <mat-card-title>Billing Address</mat-card-title>
+
+                <mat-card-content>
+                    <div>{{billingAddress.first_name}} {{billingAddress.last_name}}</div>
+                    <div>{{billingAddress.email}}</div>
+                    <div>{{billingAddress.address_line1}}</div>
+                    <div>{{billingAddress.address_line2}}</div>
+                    <div>{{billingAddress.city}}</div>
+                    <div>{{billingAddress.state}}</div>
+                    <div>{{billingAddress.zip}}</div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button
+                        [routerLink]="['billing']"
+                        color="primary">EDIT</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <mat-card class="mat-elevation-z3">
+            <mat-card-title>Cart Items</mat-card-title>
+
+            <form class="table-container">
+                <mat-form-field class="bulk-select">
+                    <mat-label>Bulk actions</mat-label>
+                    <mat-select #selAction="ngModel"
+                        ngModel
+                        name="selAction">
+                        <mat-option *ngFor="let action of bulkActions"
+                            [value]="action.value">
+                            {{action.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-table [dataSource]="cart$"
+                    matSort
+                    matSortActive="createdAt"
+                    matSortDirection="asc"
+                    matSortDisableClear>
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell
+                            *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell
+                            *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef
+                            mat-sort-header>Name</mat-header-cell>
+                        <mat-cell
+                            [routerLink]="['/dashboard', 'products', 'edit', item.product.originalId]"
+                            *matCellDef="let item">{{item.product.name}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                        <mat-header-cell *matHeaderCellDef
+                            mat-sort-header>Price ($)</mat-header-cell>
+                        <mat-cell *matCellDef="let item">
+                            {{item.product.price | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                        <mat-header-cell *matHeaderCellDef
+                            mat-sort-header>Qty</mat-header-cell>
+                        <mat-cell *matCellDef="let item">
+                            <mat-form-field floatLabel="never"><input matInput
+                                    [(ngModel)]="item.quantity"
+                                    [ngModelOptions]="{standalone: true}"
+                                    type="number"></mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    <!-- [routerLink]="['/dashboard', 'products', 'edit', row.product.originalId]" -->
+                </mat-table>
+            </form>
+            <div class="update-cart">
+                <button mat-flat-button
+                    (click)="updateCart()"
+                    color="primary">Update cart</button>
+            </div>
+            <mat-form-field class="update-status">
+                <mat-label>Order status</mat-label>
+                <mat-select [formControl]="currentStatus"
+                    (selectionChange)="changeStatus($event)">
+                    <mat-option *ngFor="let status of orderStatuses"
+                        [value]="status.value">{{status.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="total-price-wrap"><span class="total-price">Total price:</span><span
+                    class="total-price-val">{{orderTotal | number:'1.2-2':'en-us'}}$</span>
+            </div>
+
+        </mat-card>
+    </div>
+    <button mat-raised-button
+        (click)="location.back()"
+        class="icon-button back-btn mat-elevation-z3"
+        color="primary"
+        type="button">
+        <mat-icon>arrow_back</mat-icon>
+        Back
+    </button>
+</app-layout>

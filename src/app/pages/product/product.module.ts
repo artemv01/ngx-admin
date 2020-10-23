@@ -18,11 +18,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [ProductsComponent, SingleProductComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ProductRoutingModule,
     SharedModule,
     HttpClientModule,
@@ -41,6 +47,10 @@ import { MatTableModule } from '@angular/material/table';
     MatSlideToggleModule,
     DragDropModule,
     MatTableModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
+    MatSortModule,
   ],
 })
 export class ProductModule {}

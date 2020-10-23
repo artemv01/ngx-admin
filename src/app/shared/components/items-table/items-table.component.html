@@ -1,6 +1,12 @@
 <mat-card>
     <div class="items-actions">
-        <ng-content></ng-content>
+        <button [routerLink]="['/dashboard', 'products', 'add']"
+            mat-flat-button
+            class="icon-button"
+            color="primary"
+            type="submit">
+            <mat-icon>add</mat-icon>Add New
+        </button>
     </div>
     <mat-form-field class="bulk-select">
         <mat-label>Bulk actions</mat-label>
@@ -58,13 +64,15 @@
             </ng-container>
             <ng-container matColumnDef="price">
                 <mat-header-cell *matHeaderCellDef
-                    mat-sort-header>Price</mat-header-cell>
-                <mat-cell *matCellDef="let product">{{product.price}}</mat-cell>
+                    mat-sort-header>Price ($)</mat-header-cell>
+                <mat-cell *matCellDef="let product">
+                    {{product.price | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="salePrice">
                 <mat-header-cell *matHeaderCellDef
-                    mat-sort-header>Sale Price</mat-header-cell>
-                <mat-cell *matCellDef="let product">{{product.salePrice}}</mat-cell>
+                    mat-sort-header>Sale Price ($)</mat-header-cell>
+                <mat-cell *matCellDef="let product">
+                    {{product.salePrice | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="onSale">
                 <mat-header-cell *matHeaderCellDef
@@ -74,7 +82,16 @@
             <ng-container matColumnDef="rating">
                 <mat-header-cell *matHeaderCellDef
                     mat-sort-header>Rating</mat-header-cell>
-                <mat-cell *matCellDef="let product">{{product.rating}}</mat-cell>
+                <mat-cell *matCellDef="let product">
+                    <span *ngIf="!product.rating">-</span>
+                    <span style="display:flex;flex-flow:nowrap;align-items: center;"
+                        *ngIf="product.rating">
+                        <app-star-rating style="padding-right: .25rem"
+                            [rating]="product.rating">
+                        </app-star-rating><span class="rating-count"
+                            style="font-weight: 600;">({{product.ratingCount}})</span>
+                    </span>
+                </mat-cell>
             </ng-container>
             <ng-container matColumnDef="createdAt">
                 <mat-header-cell *matHeaderCellDef

@@ -3,53 +3,43 @@ import {
   Attribute,
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { ItemsQuery } from '@app/shared/models/items-query';
 import { ItemsDataSource } from '@app/shared/datasources/items.datasource';
+import { BulkAction } from '@app/shared/models/bulk-action';
 import { NotificationService } from '@app/shared/services/notification.service';
-import { fromEvent, merge, Observable, Subject } from 'rxjs';
+import { fromEvent, merge, Subject } from 'rxjs';
 import {
   takeUntil,
   debounceTime,
   distinctUntilChanged,
   tap,
 } from 'rxjs/operators';
-import { BulkAction } from 'src/app/shared/models/bulk-action';
-import { FilterQuery } from 'src/app/shared/models/filter-query';
-import { PaginationQuery } from 'src/app/shared/models/pagination-query';
-import { environment } from 'src/environments/environment';
-import { Product } from '../../models/product';
-import { ProductsService } from '../../services/products.service';
-@Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
-})
-export class ProductsComponent implements OnDestroy {
-  environment = environment;
-  bulkActions: BulkAction[] = [
-    {
-      name: 'Delete',
-      value: 'delete',
-    },
-  ];
+import { Order } from '../../models/order';
+import { OrderStatus, OrderStatuses } from '../../models/order-status';
+import { OrderService } from '../../services/order.service';
 
+@Component({
+  selector: 'app-orders',
+  templateUrl: './orders.component.html',
+  styleUrls: ['./orders.component.scss'],
+})
+export class OrdersComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable, { static: true }) table: MatTable<Product>;
+  @ViewChild(MatTable, { static: true }) table: MatTable<Order>;
   @ViewChild('search', { static: true }) searchInput: ElementRef;
   @ViewChild('selAction') selAction: FormControl;
 
   destroy = new Subject<null>();
 
-  dataSource: ItemsDataSource<Product>;
+  dataSource: ItemsDataSource<Order>;
   itemsQuery: ItemsQuery = {
     search: '',
     sortOrder: 'asc',
@@ -57,29 +47,41 @@ export class ProductsComponent implements OnDestroy {
     limit: 10,
     page: 1,
   };
-  displayedColumns = [
-    'select',
-    // 'image',
-    'name',
-    'price',
-    'salePrice',
-    'onSale',
-    'rating',
-    'createdAt',
-  ];
+  displayedColumns = ['select', 'customer', 'total', 'status', 'date'];
 
-  selection = new SelectionModel<Product>(true, []);
+  totalItems: number = 0;
+
+  selection = new SelectionModel<Order>(true, []);
+
+  bulkActions: BulkAction[] = [
+    {
+      name: 'Delete',
+      value: 'delete',
+    },
+    {
+      name: 'Change status to On Hold',
+      value: 'on_hold',
+    },
+    {
+      name: 'Change status to Pending',
+      value: 'pending',
+    },
+    {
+      name: 'Change status to Completed',
+      value: 'completed',
+    },
+  ];
 
   _cancelItemQuery = new Subject<null>();
   cancelItemQuery$ = this._cancelItemQuery.asObservable();
 
   constructor(
-    private productService: ProductsService,
+    private dataService: OrderService,
     private fb: FormBuilder,
     private notify: NotificationService
   ) {
-    this.dataSource = new ItemsDataSource<Product>(
-      this.productService,
+    this.dataSource = new ItemsDataSource<Order>(
+      this.dataService,
       this.cancelItemQuery$
     );
     this.dataSource.loadItems(this.itemsQuery);
@@ -135,16 +137,25 @@ export class ProductsComponent implements OnDestroy {
           return;
         }
         if ('delete' === action) {
-          this.productService.delete(items).subscribe(() => {
-            this.notify.push({});
+          this.dataService.delete(items).subscribe(() => {
+            this.notify.push();
             this.dataSource.loadItems(this.itemsQuery);
           });
+          this.selAction.reset();
+        } else {
+          this.dataService
+            .changeStatus({ orders: items, status: action })
+            .subscribe(() => {
+              this.notify.push({});
+              this.dataSource.loadItems(this.itemsQuery);
+            });
           this.selAction.reset();
         }
       });
   }
 
   loadItemsPage() {
+    // fix for pagination component because it works with pages starting from 0, api starts from 1
     this.itemsQuery.page += 1;
     this.dataSource.loadItems(this.itemsQuery);
   }
@@ -161,8 +172,13 @@ export class ProductsComponent implements OnDestroy {
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  ngOnDestroy() {
+  getOrderStatus(status: 'string') {
+    return OrderStatuses[status];
+  }
+
+  ngOnDestroy(): void {
     this._cancelItemQuery.next(null);
     this.destroy.next();
   }
+  ngOnInit(): void {}
 }

@@ -24,6 +24,12 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
     description: [''],
   });
 
+  get name(): AbstractControl {
+    return this.categoryForm.get('name');
+  }
+  get description(): AbstractControl {
+    return this.categoryForm.get('description');
+  }
   savedStatus = '';
 
   constructor(
@@ -35,13 +41,6 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
     public loading: LoadingService,
     public notification: NotificationService
   ) {}
-
-  get name(): AbstractControl {
-    return this.categoryForm.get('name');
-  }
-  get description(): AbstractControl {
-    return this.categoryForm.get('description');
-  }
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params) => {
@@ -80,6 +79,7 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
   }
 
   addCategory() {
+    if (this.categoryForm.invalid) return;
     this.loading.show();
     this.api.create(this.categoryForm.value).subscribe(
       (result) => {

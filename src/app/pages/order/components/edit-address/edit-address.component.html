@@ -1,0 +1,113 @@
+<app-layout>
+    <mat-card class="mat-elevation-z3"
+        *ngIf="loading.display$ | async">
+        <div class="spinner-container">
+            <mat-spinner></mat-spinner>
+        </div>
+    </mat-card>
+    <div class="container"
+        *ngIf="!(loading.display$ | async)">
+
+        <mat-toolbar class="page-header">
+            <h1>Edit {{type === 'shipping' ? 'shipping' : 'billing'}} address</h1>
+        </mat-toolbar>
+        <mat-card class="mat-elevation-z3">
+            <mat-card-title>
+                Edit {{type === 'shipping' ? 'shipping' : 'billing'}} address
+            </mat-card-title>
+
+            <form (submit)="edit()"
+                [formGroup]="addressForm">
+                <div class="addr-row">
+                    <mat-form-field>
+                        <mat-label>First name</mat-label>
+                        <input required
+                            formControlName="first_name"
+                            matInput
+                            placeholder="John">
+                        <mat-error *ngIf="firstName.hasError('required')">First name is required.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Last name</mat-label>
+                        <input required
+                            formControlName="last_name"
+                            matInput
+                            placeholder="Doe">
+                        <mat-error *ngIf="lastName.hasError('required')">Last name is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="addr-row">
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input required
+                            formControlName="email"
+                            matInput
+                            placeholder="johndoe@example.com">
+                        <mat-error *ngIf="email.hasError('required')">Email is required.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Phone</mat-label>
+                        <input formControlName="phone"
+                            matInput
+                            placeholder="">
+                    </mat-form-field>
+                </div>
+                <div class="addr-row">
+                    <mat-form-field>
+                        <mat-label>Address line 1</mat-label>
+                        <input required
+                            formControlName="address_line1"
+                            matInput
+                            placeholder="Customer's house number and street name">
+                        <mat-error *ngIf="addressLine1.hasError('required')">Address is required.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Address line 2</mat-label>
+                        <input formControlName="address_line2"
+                            matInput
+                            placeholder="Cusotmer's apartment, suite, unit etc. (Optional)">
+                    </mat-form-field>
+                </div>
+                <mat-form-field>
+                    <mat-label>Country</mat-label>
+                    <input required
+                        formControlName="country"
+                        matInput
+                        placeholder="Country">
+                    <mat-error *ngIf="country.hasError('required')">Country is required.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>State</mat-label>
+                    <input formControlName="state"
+                        matInput
+                        placeholder="State">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>ZIP</mat-label>
+                    <input required
+                        formControlName="zip"
+                        matInput
+                        placeholder="">
+                </mat-form-field>
+                <button mat-flat-button
+                    class="icon-button"
+                    color="primary"
+                    type="submit">
+                    <mat-icon>{{'edit'}}</mat-icon>
+                    Update address
+                </button>
+            </form>
+        </mat-card>
+        <button mat-raised-button
+            (click)="location.back()"
+            class="icon-button back-btn mat-elevation-z3"
+            color="primary"
+            type="button">
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+</app-layout>

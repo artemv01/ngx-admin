@@ -12,17 +12,17 @@ import {
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { forkJoin, Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
-import { ItemsResp } from 'src/app/shared/components/items-table/items-resp';
+import { filter, map, startWith, take, takeUntil } from 'rxjs/operators';
+import { ItemsResp } from '@app/shared/models/items-resp';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { Product } from '../../models/product';
 import { Category } from '../../../category/models/category';
 import { ProductsService } from '../../services/products.service';
 import { CategoryService } from 'src/app/pages/category/services/category.service';
+import { LastRouteService } from '@app/shared/services/last-route.service';
 
 export const salePriceRequired: ValidatorFn = (
   control: FormGroup
@@ -52,7 +52,11 @@ export const salePriceRequired: ValidatorFn = (
   templateUrl: './single-product.component.html',
   styleUrls: ['./single-product.component.scss'],
 })
-export class SingleProductComponent implements OnInit {
+export class SingleProductComponent implements OnInit, AfterViewInit {
+  savedStatus = '';
+
+  previousUrl = '';
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
   filterCats$: Observable<Category[]>;
@@ -93,10 +97,12 @@ export class SingleProductComponent implements OnInit {
     public location: Location,
     public loading: LoadingService,
     public categoryService: CategoryService,
-    public notification: NotificationService
+    public notification: NotificationService,
+    private lastUrl: LastRouteService
   ) {
     this.filterCats$ = this.catsInput.valueChanges.pipe(
       startWith(null),
+      takeUntil(this.destroy),
       map((text: string | null) =>
         text ? this._filter(text) : this.allCategories.slice()
       )
@@ -126,8 +132,12 @@ export class SingleProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.lastUrl.url$
+      .pipe(takeUntil(this.destroy))
+      .subscribe((url) => (this.previousUrl = url));
+
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params) => {
-      // this.savedStatus = params['status'];
+      this.savedStatus = params['status'];
     });
 
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
@@ -146,10 +156,16 @@ export class SingleProductComponent implements OnInit {
     });
   }
 
-  /* addProduct() {
-    this.notification.push({ message: 'Product created!' });
-  } */
+  ngAfterViewInit() {
+    if (this.savedStatus === 'success') {
+      this.notification.push({
+        message: 'Product created!',
+      });
+    }
+  }
+
   editProduct() {
+    if (this.productForm.invalid) return;
     this.loading.show();
     let formData = {
       categories: this.addedCategories,
@@ -168,6 +184,8 @@ export class SingleProductComponent implements OnInit {
   }
 
   addProduct() {
+    if (this.productForm.invalid) return;
+
     this.loading.show();
     let formData = {
       categories: this.addedCategories,
@@ -225,6 +243,14 @@ export class SingleProductComponent implements OnInit {
   }
   removeCategory(i: number): void {
     this.addedCategories[i].toDelete = true;
+  }
+
+  back() {
+    if (/products\/add/.test(this.previousUrl)) {
+      this.router.navigate(['/dashboard', 'products']);
+    } else {
+      this.location.back();
+    }
   }
 
   private _getProduct() {

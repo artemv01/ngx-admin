@@ -1,13 +1,5 @@
 @import '/src/styles/colors';
-.table-container {
-    mat-table {
-        // box-shadow: 0 3px 11px 0 $c-shadow-white, 0 3px 3px -2px $c-shadow-gray, 0 1px 8px 0 $c-shadow-dark-gray;
 
-        min-width: 1200px;
-    }
-    max-width: 100%;
-    overflow-x: auto;
-}
 .items-actions {
     margin: 1rem 0;
 }
@@ -36,4 +28,8 @@
     &:hover {
         background: rgba(0, 0, 0, 0.04);
     }
+}
+.mat-column-rating .rating-count {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.4);
 }

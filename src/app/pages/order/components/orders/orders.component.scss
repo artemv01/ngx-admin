@@ -19,6 +19,10 @@
 .mat-column-select {
     overflow: initial;
 }
+.table-container td,
+.table-container th {
+    border: 0;
+}
 
 .bulk-select {
     margin-right: 1rem;
@@ -26,5 +30,15 @@
 @include media-md {
     .bulk-select {
         margin-right: 1rem;
+    }
+}
+
+.ripple {
+    cursor: pointer;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
     }
 }

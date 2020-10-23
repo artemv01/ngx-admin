@@ -18,8 +18,8 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
-import { ItemsQuery } from 'src/app/shared/components/items-table/items-query';
-import { ItemsDataSource } from 'src/app/shared/components/items-table/items.datasource';
+import { ItemsQuery } from '@app/shared/models/items-query';
+import { ItemsDataSource } from '@app/shared/datasources/items.datasource';
 import { BulkAction } from 'src/app/shared/models/bulk-action';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Category } from '../../models/category';
@@ -37,7 +37,7 @@ export class CategoriesComponent implements OnInit {
   @ViewChild('search', { static: true }) searchInput: ElementRef;
   @ViewChild('selAction') selAction: FormControl;
 
-  destory = new Subject<null>();
+  destroy = new Subject<null>();
 
   dataSource: ItemsDataSource<Category>;
   itemsQuery: ItemsQuery = {
@@ -60,19 +60,25 @@ export class CategoriesComponent implements OnInit {
     },
   ];
 
+  _cancelItemQuery = new Subject<null>();
+  cancelItemQuery$ = this._cancelItemQuery.asObservable();
+
   constructor(
     @Attribute('itemsType') itemsType: string,
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private notify: NotificationService
   ) {
-    this.dataSource = new ItemsDataSource<Category>(this.categoryService);
+    this.dataSource = new ItemsDataSource<Category>(
+      this.categoryService,
+      this.cancelItemQuery$
+    );
     this.dataSource.loadItems(this.itemsQuery);
   }
 
   ngAfterViewInit() {
     this.sort.sortChange
-      .pipe(takeUntil(this.destory))
+      .pipe(takeUntil(this.destroy))
       .subscribe(({ direction, active }) => {
         this.paginator.pageIndex = this.itemsQuery.page = 0;
         this.itemsQuery.sortOrder = direction;
@@ -80,7 +86,7 @@ export class CategoriesComponent implements OnInit {
       });
 
     this.paginator.page
-      .pipe(takeUntil(this.destory))
+      .pipe(takeUntil(this.destroy))
       .subscribe(({ pageSize, pageIndex }) => {
         this.itemsQuery.limit = pageSize;
         this.itemsQuery.page = pageIndex;
@@ -91,31 +97,42 @@ export class CategoriesComponent implements OnInit {
         debounceTime(150),
         distinctUntilChanged(),
         tap(() => {
+          this._cancelItemQuery.next(null);
           this.paginator.pageIndex = this.itemsQuery.page = 0;
           this.itemsQuery.search = this.searchInput.nativeElement.value;
           this.loadItemsPage();
         }),
-        takeUntil(this.destory)
+        takeUntil(this.destroy)
       )
       .subscribe();
 
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadItemsPage()),
-        takeUntil(this.destory)
+        takeUntil(this.destroy)
       )
       .subscribe();
 
     this.selAction.valueChanges
-      .pipe(takeUntil(this.destory))
-      .subscribe((val) => {
-        if (!val) return;
+      .pipe(takeUntil(this.destroy))
+      .subscribe((action) => {
+        if (!action) return;
+
         const items = this.selection.selected.map((val) => val._id);
-        this.categoryService.delete(items).subscribe(() => {
-          this.notify.push({});
-          this.dataSource.loadItems(this.itemsQuery);
-        });
-        this.selAction.reset();
+        if (!items.length) {
+          this.notify.push({
+            type: 'info',
+            message: 'Please select at least one item.',
+          });
+          return;
+        }
+        if ('delete' === action) {
+          this.categoryService.delete(items).subscribe(() => {
+            this.notify.push({});
+            this.dataSource.loadItems(this.itemsQuery);
+          });
+          this.selAction.reset();
+        }
       });
   }
 
@@ -138,7 +155,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.destory.next(null);
+    this._cancelItemQuery.next(null);
+    this.destroy.next();
   }
   ngOnInit(): void {}
 }

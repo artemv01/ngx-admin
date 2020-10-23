@@ -26,6 +26,14 @@ body {
     justify-content: center;
 }
 
+.table-container {
+    mat-table {
+        min-width: 1200px;
+    }
+    max-width: 100%;
+    overflow-x: auto;
+}
+
 .bottom-buttons {
     margin-top: 2rem;
     width: 100%;
@@ -51,4 +59,15 @@ body {
 }
 .text-note {
     opacity: 0.6;
+}
+.empty-table-message {
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding: 2rem 0;
+}
+
+.items-actions {
+    margin: 0rem 0 1rem 0;
 }

@@ -26,8 +26,8 @@ import { Product } from 'src/app/pages/product/models/product';
 import { ProductsService } from 'src/app/pages/product/services/products.service';
 import { BulkAction } from '../../models/bulk-action';
 import { BulkEvent } from '../../models/bulk-event';
-import { ItemsQuery } from './items-query';
-import { ItemsDataSource } from './items.datasource';
+import { ItemsQuery } from '../../models/items-query';
+import { ItemsDataSource } from '../../datasources/items.datasource';
 
 @Component({
   selector: 'app-items-table',

@@ -103,11 +103,16 @@ button.mat-mini-fab {
         padding: 0;
     }
 }
+button.back-btn {
+    margin: 1rem;
+    box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+}
 
 mat-toolbar.page-header {
     display: flex;
     justify-content: space-between;
-    padding: 50px 24px 32px 0;
+    padding: 50px 24px 16px 1rem;
     background: none;
     height: auto;
     h1 {
@@ -117,6 +122,12 @@ mat-toolbar.page-header {
         line-height: 1;
         letter-spacing: -0.2186px;
     }
+}
+
+button.mat-mini-fab[mat-mini-fab] {
+    background-color: transparent !important;
+    box-shadow: none;
+    color: $c-top-header-icon;
 }
 
 .menu-list-item.mat-list-item .mat-list-item-content {
@@ -129,4 +140,28 @@ mat-toolbar.page-header {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+mat-table.mat-table td,
+mat-table.mat-table th {
+    border: 0;
+}
+mat-row.ripple {
+    cursor: pointer;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+}
+
+mat-card {
+    margin: 1rem;
+}
+mat-card-title.mat-card-title {
+    font-size: 21px;
+    font-weight: 400;
+    color: #6e6e6e;
+    margin-bottom: 1rem;
 }

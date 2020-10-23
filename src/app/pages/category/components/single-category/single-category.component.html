@@ -2,7 +2,7 @@
     <mat-toolbar class="page-header">
         <h1>{{categoryId ? 'Edit' : 'Add'}} Category</h1>
     </mat-toolbar>
-    <mat-card>
+    <mat-card class="mat-elevation-z3">
         <div class="spinner-container"
             *ngIf="loading.display$ | async">
             <mat-spinner></mat-spinner>
@@ -40,6 +40,7 @@
                 <button mat-flat-button
                     class="icon-button"
                     color="primary"
+                    [disabled]="categoryForm.invalid"
                     type="submit">
                     <mat-icon>{{categoryId ? 'edit' : 'save'}}</mat-icon>
                     {{categoryId ? 'Edit' : 'Add'}}

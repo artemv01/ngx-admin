@@ -21,6 +21,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { ImageDropComponent } from './components/image-drop/image-drop.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -28,6 +29,7 @@ import { NavItemComponent } from './components/nav-item/nav-item.component';
     ImageDropComponent,
     NotificationsComponent,
     NavItemComponent,
+    StarRatingComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,11 @@ import { NavItemComponent } from './components/nav-item/nav-item.component';
     MatCardModule,
     MatRippleModule,
   ],
-  exports: [LayoutComponent, ItemsTableComponent, ImageDropComponent],
+  exports: [
+    LayoutComponent,
+    ItemsTableComponent,
+    ImageDropComponent,
+    StarRatingComponent,
+  ],
 })
 export class SharedModule {}

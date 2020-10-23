@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subject, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Notification } from '../models/notification';
 @Injectable({
   providedIn: 'root',
@@ -8,7 +10,13 @@ export class NotificationService {
   emitter$: Subject<Notification[]> = new Subject();
   dismiss: Subject<null> = new Subject();
   notifications: Record<string, Notification> = {};
-  constructor() {}
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.dismissAll();
+      });
+  }
   push(data: Notification = {}) {
     if (!data.type) {
       data.type = 'success';
@@ -18,7 +26,8 @@ export class NotificationService {
     }
     const key = new Date().getTime();
     this.notifications[key] = { ...data, key: key };
-    this.emitter$.next(Object.values(this.notifications));
+    setInterval(() => this.emitter$.next(Object.values(this.notifications)), 0);
+
     setInterval(() => {
       delete this.notifications[key];
       this.emitter$.next(Object.values(this.notifications));

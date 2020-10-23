@@ -2,7 +2,7 @@
     <mat-toolbar class="page-header">
         <h1>{{productId ? 'Edit' : 'Add'}} Product</h1>
     </mat-toolbar>
-    <mat-card>
+    <mat-card class="mat-elevation-z3">
         <div class="spinner-container"
             *ngIf="loading.display$ | async">
             <mat-spinner></mat-spinner>
@@ -98,7 +98,7 @@
             </mat-form-field>
             <div class="bottom-buttons">
                 <button mat-flat-button
-                    (click)="location.back()"
+                    (click)="back()"
                     class="icon-button"
                     color="accent"
                     type="button">
@@ -107,6 +107,7 @@
                 </button>
                 <button mat-flat-button
                     class="icon-button"
+                    [disabled]="productForm.invalid"
                     color="primary"
                     type="submit">
                     <mat-icon>{{productId ? 'edit' : 'save'}}</mat-icon>
