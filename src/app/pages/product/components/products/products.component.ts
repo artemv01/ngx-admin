@@ -43,7 +43,7 @@ export class ProductsComponent implements OnDestroy {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable, { static: true }) table: MatTable<Product>;
+  @ViewChild('itemsTable', { static: true }) table: MatTable<Product>;
   @ViewChild('search', { static: true }) searchInput: ElementRef;
   @ViewChild('selAction') selAction: FormControl;
 
@@ -60,6 +60,7 @@ export class ProductsComponent implements OnDestroy {
   displayedColumns = [
     'select',
     // 'image',
+    'view',
     'name',
     'price',
     'salePrice',

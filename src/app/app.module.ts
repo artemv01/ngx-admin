@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { handleErrorProvider } from './shared/helpers/handle-error';
 import { AuthInterceptor } from './pages/auth/auth.interceptor';
+import { MatCard, MatCardModule } from '@angular/material/card';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -35,6 +37,9 @@ import { AuthInterceptor } from './pages/auth/auth.interceptor';
     MatListModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatCardModule,
+
+    SharedModule,
   ],
   providers: [
     handleErrorProvider,

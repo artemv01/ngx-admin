@@ -13,8 +13,17 @@ import {
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { forkJoin, Observable, Subject } from 'rxjs';
-import { filter, map, startWith, take, takeUntil } from 'rxjs/operators';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
+import {
+  filter,
+  first,
+  map,
+  mergeMap,
+  startWith,
+  take,
+  takeUntil,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { ItemsResp } from '@app/shared/models/items-resp';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -23,6 +32,9 @@ import { Category } from '../../../category/models/category';
 import { ProductsService } from '../../services/products.service';
 import { CategoryService } from 'src/app/pages/category/services/category.service';
 import { LastRouteService } from '@app/shared/services/last-route.service';
+import { StorageService } from '@app/shared/services/storage.service';
+import { ItemType } from '../../models/item-type';
+import { Product } from '../../models/product';
 
 export const salePriceRequired: ValidatorFn = (
   control: FormGroup
@@ -64,6 +76,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
 
   routeParamSub: any;
   productId: string;
+  productName: string;
   destroy: Subject<boolean> = new Subject();
 
   //   initImageSrc$ = new Subject();
@@ -88,6 +101,12 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
   allCategories: Category[] = [];
   addedCategories: Category[] = [];
 
+  priceInputOptions = {
+    align: 'left',
+    allowNegative: false,
+    prefix: '$',
+  };
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -98,7 +117,9 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
     public loading: LoadingService,
     public categoryService: CategoryService,
     public notification: NotificationService,
-    private lastUrl: LastRouteService
+    private lastUrl: LastRouteService,
+    private store: StorageService<Product>,
+    private productService: ProductsService
   ) {
     this.filterCats$ = this.catsInput.valueChanges.pipe(
       startWith(null),
@@ -140,20 +161,41 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
       this.savedStatus = params['status'];
     });
 
-    this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
-      this.productId = params.get('id') === 'add' ? '' : params.get('id');
-      if (this.productId) {
-        this._getProduct();
-      } else {
-        this.loading.show();
-        this.categoryService
-          .getAll()
-          .subscribe((categories: ItemsResp<Category>) => {
-            this.allCategories = categories.items;
-            this.loading.hide();
-          });
-      }
-    });
+    this.productId = this.route.snapshot.paramMap.get('id');
+    if (this.productId) {
+      this.store.select$
+        .pipe(
+          first(),
+          withLatestFrom(this.store.type$),
+          mergeMap(
+            ([product, type]): Observable<Product> => {
+              const id = this.productId;
+              if (id === product?._id && type == ItemType.PRODUCT) {
+                return of(product);
+              }
+
+              return this.productService.getOne(id);
+            }
+          )
+        )
+        .subscribe((product: Product) => {
+          const { categories, image, ...productData } = product;
+
+          this.productForm.patchValue(productData);
+          this.productName = productData.name;
+          this.addedCategories = categories;
+          if (image) {
+            this.initImageSrc = image;
+          }
+          this.productForm.updateValueAndValidity();
+        });
+    }
+
+    this.categoryService
+      .getAll()
+      .subscribe(
+        (cats: ItemsResp<Category>) => (this.allCategories = cats.items)
+      );
   }
 
   ngAfterViewInit() {
@@ -166,45 +208,36 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
 
   editProduct() {
     if (this.productForm.invalid) return;
-    this.loading.show();
     let formData = {
       categories: this.addedCategories,
       ...this.productForm.value,
     };
 
-    this.api.edit(formData, this.productId).subscribe(
-      (result) => {
-        this.loading.hide();
-        this.notification.push({
-          message: 'Product edited!',
-        });
-      },
-      () => this.loading.hide()
-    );
+    this.api.edit(formData, this.productId).subscribe((updated) => {
+      this.productName = this.name.value;
+
+      this.notification.push({
+        message: 'Product edited!',
+      });
+    });
   }
 
   addProduct() {
     if (this.productForm.invalid) return;
 
-    this.loading.show();
     let formData = {
       categories: this.addedCategories,
       ...this.productForm.value,
     };
 
-    this.api.create(formData).subscribe(
-      (result) => {
-        this.loading.hide();
-
-        this.router.navigate(['/dashboard/products/edit/', result], {
-          queryParams: {
-            status: 'success',
-          },
-          queryParamsHandling: 'merge',
-        });
-      },
-      () => this.loading.hide()
-    );
+    this.api.create(formData).subscribe((product) => {
+      this.router.navigate(['/dashboard/products/edit/', product._id], {
+        queryParams: {
+          status: 'success',
+        },
+        queryParamsHandling: 'merge',
+      });
+    });
   }
 
   createCategory(event: MatChipInputEvent): void {
@@ -253,7 +286,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private _getProduct() {
+  /* private _getProduct() {
     this.loading.show();
     forkJoin([
       this.api.getOne(this.productId),
@@ -275,7 +308,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
         this.loading.hide();
       }
     );
-  }
+  } */
 
   private _filter(value: string): Category[] {
     const filterValue = value.toLowerCase();

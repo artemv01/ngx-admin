@@ -2,13 +2,41 @@
     <mat-toolbar class="page-header">
         <h1>{{productId ? 'Edit' : 'Add'}} Product</h1>
     </mat-toolbar>
-    <mat-card class="mat-elevation-z3">
-        <div class="spinner-container"
-            *ngIf="loading.display$ | async">
-            <mat-spinner></mat-spinner>
+    <mat-card [hidden]="!(loading.display$ | async)"
+        class="load-indicator mat-elevation-z3">
+        <app-skeleton style="height:24px; margin-bottom: 1.5rem">
+        </app-skeleton>
+        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
+        </app-skeleton>
+        <app-skeleton style="height:24px; margin-bottom: 1rem">
+        </app-skeleton>
+        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
+        </app-skeleton>
+        <app-skeleton style="height:150px; margin-bottom: 1rem;">
+        </app-skeleton>
+        <div style="display: flex;flex-flow:row nowrap; margin-bottom: 1rem;">
+            <app-skeleton style="height:24px;  flex: 1 1 auto; margin-right: .5rem">
+            </app-skeleton>
+            <app-skeleton style="height:24px;  flex: 1 1 auto; margin-left: .5rem">
+            </app-skeleton>
         </div>
+        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
+        </app-skeleton>
+        <app-skeleton style="height:200px; margin-bottom: 1rem; width: 100%;">
+        </app-skeleton>
+        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
+        </app-skeleton>
+        <app-skeleton style="height:24px; margin-bottom: 1rem">
+        </app-skeleton>
+    </mat-card>
+    <mat-card [hidden]="(loading.display$ | async)"
+        class="content mat-elevation-z3">
+        <mat-card-title *ngIf="productName">
+            <h4>
+                {{productName}}
+            </h4>
+        </mat-card-title>
         <form class="product-form"
-            *ngIf="!(loading.display$ | async)"
             (submit)="productId ? editProduct() : addProduct()"
             [formGroup]="productForm">
             <mat-form-field>
@@ -38,10 +66,11 @@
                     <mat-label>Price</mat-label>
 
                     <input required
+                        currencyMask
                         formControlName="price"
                         matInput
-                        placeholder="0.00">
-                    <span matSuffix>$&nbsp;</span>
+                        [options]="priceInputOptions">
+                    <!-- <span matSuffix>$&nbsp;</span> -->
                     <mat-error *ngIf="price.hasError('required')">Product price name is required.
                     </mat-error>
 
@@ -50,9 +79,10 @@
                     <mat-label>Sale price</mat-label>
 
                     <input matInput
+                        currencyMask
+                        [options]="priceInputOptions"
                         formControlName="salePrice"
                         placeholder="Sale price">
-                    <span matSuffix>$&nbsp;</span>
                     <mat-error *ngIf="salePrice.hasError('salePriceRequired')">Sale price is
                         required
                         when On Sale switch is ON.</mat-error>

@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [ProductsComponent, SingleProductComponent],
@@ -51,6 +52,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatCheckboxModule,
     MatSortModule,
+    NgxCurrencyModule,
   ],
 })
 export class ProductModule {}

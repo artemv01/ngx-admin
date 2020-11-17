@@ -24,14 +24,15 @@ export class ImageDropComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    if (this.initSrc) {
+    // this.isImageUploaded = !!this.initSrc;
+    /*  if (this.initSrc) {
       setTimeout(() => (this.isImageUploaded = true), 0);
-    }
+    } */
   }
 
   // product image
   dragBorder = false;
-  isImageUploaded = false;
+  isImageUploaded: boolean;
   imageTypeErr = false;
 
   // to prevent double-click

@@ -9,10 +9,6 @@
 .mat-column-select {
     overflow: initial;
 }
-.table-container td,
-.table-container th {
-    border: 0;
-}
 
 .bulk-select {
     margin-right: 0rem;
@@ -34,4 +30,10 @@
 .mat-column-rating .rating-count {
     font-weight: 600;
     color: rgba(0, 0, 0, 0.4);
+}
+
+button.mat-mini-fab.view-product-btn {
+    color: #ccc;
+    display: inline-block;
+    margin: 0 16px;
 }

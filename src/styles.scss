@@ -33,17 +33,24 @@ body {
     max-width: 100%;
     overflow-x: auto;
 }
+.table-container td,
+.table-container th {
+    border: 0;
+}
 
 .bottom-buttons {
     margin-top: 2rem;
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     button {
-        max-width: 12rem;
-        min-width: 9rem;
+        max-width: 10rem;
+        width: 100%;
+    }
+    button:first-child {
+        margin-right: 1.25rem;
     }
 }
 

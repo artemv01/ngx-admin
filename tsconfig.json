@@ -20,5 +20,10 @@
         "@app/*": ["./src/app/*"],
         "@root/*": ["./src/*"],
     },
+
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

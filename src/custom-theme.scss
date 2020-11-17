@@ -159,9 +159,9 @@ mat-row.ripple {
 mat-card {
     margin: 1rem;
 }
-mat-card-title.mat-card-title {
-    font-size: 21px;
-    font-weight: 400;
-    color: #6e6e6e;
-    margin-bottom: 1rem;
+mat-card-title.mat-card-title h4 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #b9b9b9;
+    margin-bottom: 1.5rem;
 }

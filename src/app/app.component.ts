@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { LastRouteService } from './shared/services/last-route.service';
+import { LoadingService } from './shared/services/loading.service';
 
 export interface Fruit {
   name: string;
@@ -17,7 +18,11 @@ export interface Fruit {
 })
 export class AppComponent {
   previousUrl: string;
-  constructor(private router: Router, private lastRoute: LastRouteService) {
+  constructor(
+    private router: Router,
+    private lastRoute: LastRouteService,
+    public loading: LoadingService
+  ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {

@@ -11,7 +11,7 @@
         #imageInputElement
         (change)="handleImageUpload($event)"
         [formControl]="imageControl">
-    <div *ngIf="!isImageUploaded"
+    <div *ngIf="!initSrc && !isImageUploaded"
         class="image-drop-content">
         <div>
             <mat-icon>insert_photo</mat-icon>
@@ -24,7 +24,7 @@
             type="submit">Browse files</button>
     </div>
     <img #productImg
-        [hidden]="!isImageUploaded"
+        [hidden]="!initSrc && !isImageUploaded"
         [src]="initSrc"
         alt="product image">
 

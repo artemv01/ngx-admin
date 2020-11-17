@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from './components/products/products.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
+import { CategoriesResolver } from './services/categories.resolver';
+import { SingleProductResolver } from './services/single-product.resolver';
 
 const routes: Routes = [
   {
@@ -11,10 +13,17 @@ const routes: Routes = [
   {
     path: 'add',
     component: SingleProductComponent,
+    /* resolve: {
+      categories: CategoriesResolver,
+    }, */
   },
   {
     path: 'edit/:id',
     component: SingleProductComponent,
+    /*  resolve: {
+      product: SingleProductResolver,
+      categories: CategoriesResolver,
+    }, */
   },
 ];
 
