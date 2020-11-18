@@ -24,18 +24,8 @@
         align-items: stretch;
     }
 }
-mat-table {
+.table-container {
     margin-bottom: 1rem;
-}
-
-.mat-column-name {
-    cursor: pointer;
-    &:focus {
-        outline: none;
-    }
-    &:hover {
-        color: $c-primary;
-    }
 }
 
 .container {
@@ -43,16 +33,31 @@ mat-table {
 }
 
 .update-cart {
-    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
 }
-.update-status {
-}
-.total-price-wrap {
-    font-size: 18px;
-}
+
 .total-price {
     font-weight: 500;
 }
 .total-price-val {
     padding-left: 0.5rem;
+}
+
+.order-actions {
+    display: flex;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+    mat-form-field {
+        padding: 0 0.5rem;
+    }
+}
+
+.total-cell {
+    padding: 1rem 0;
+    width: 484px;
+    font-weight: 500;
+}
+.total-cell-val {
+    font-weight: 500;
 }

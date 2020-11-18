@@ -74,18 +74,14 @@ export class EditAddressComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
-      this.type = params.get('addressType');
-      this.orderId = params.get('id');
-      this.loading.show();
-      this._getAddress();
-    });
+    this.type = this.route.snapshot.paramMap.get('addressType');
+    this.orderId = this.route.snapshot.paramMap.get('id');
+    this._getAddress();
   }
   ngOnDestroy(): void {
     this.destroy.next(null);
   }
   edit() {
-    this.loading.show();
     let req = {};
     if (this.type === 'shipping') {
       req = {
@@ -96,28 +92,19 @@ export class EditAddressComponent implements OnInit, OnDestroy {
         billingAddress: this.addressForm.value,
       };
     }
-    this.api.edit(req, this.orderId).subscribe(
-      (result) => {
-        this.notify.push({
-          message: `${
-            this.type === 'shipping' ? 'Shipping' : 'Billing'
-          } address updated!`,
-        });
-        this.loading.hide();
-      },
-      () => this.loading.hide()
-    );
+    this.api.edit(req, this.orderId).subscribe((result) => {
+      this.notify.push({
+        message: `${
+          this.type === 'shipping' ? 'Shipping' : 'Billing'
+        } address updated!`,
+      });
+    });
   }
-  private _getAddress(status = '') {
+  private _getAddress() {
     this.api.getOne(this.orderId).subscribe((result) => {
       const address =
         this.type === 'shipping' ? 'shippingAddress' : 'billingAddress';
       this.addressForm.setValue(result[address]);
-
-      this.loading.hide();
-      if (status.length) {
-        this.notify.push({ message: status });
-      }
     });
   }
 }

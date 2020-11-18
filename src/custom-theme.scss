@@ -129,6 +129,11 @@ button.mat-mini-fab[mat-mini-fab] {
     box-shadow: none;
     color: $c-top-header-icon;
 }
+button.mat-mini-fab.view-item-btn {
+    color: #ccc;
+    display: inline-block;
+    margin: 0 16px;
+}
 
 .menu-list-item.mat-list-item .mat-list-item-content {
     flex: 1 1 100%;
@@ -159,9 +164,12 @@ mat-row.ripple {
 mat-card {
     margin: 1rem;
 }
-mat-card-title.mat-card-title h4 {
-    font-size: 24px;
-    font-weight: 500;
-    color: #b9b9b9;
-    margin-bottom: 1.5rem;
+mat-card-title.mat-card-title {
+    margin-bottom: 0;
+    h4 {
+        font-size: 24px;
+        font-weight: 500;
+        color: #b9b9b9;
+        margin-bottom: 1.5rem;
+    }
 }
