@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~normalize.css';
-
+@import 'styles/skeleton-load';
 [hidden] {
     display: none !important;
 }
@@ -77,4 +77,13 @@ body {
 
 .items-actions {
     margin: 0rem 0 1rem 0;
+}
+
+.search-container,
+.bulk-select {
+    width: 100%;
+    max-width: 300px;
+}
+.bulk-select {
+    margin-right: 1rem;
 }

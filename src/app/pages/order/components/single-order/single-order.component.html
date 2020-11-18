@@ -13,21 +13,28 @@
 
                 <mat-card-content>
                     <div *ngIf="loading.display$ | async">
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
                     </div>
                     <div *ngIf="!(loading.display$ | async)">
-                        <div>{{shippingAddress.first_name}} {{shippingAddress.last_name}}</div>
+                        <div>{{shippingAddress.first_name}}
+                            {{shippingAddress.last_name}}</div>
                         <div>{{shippingAddress.email}}</div>
                         <div>{{shippingAddress.address_line1}}</div>
                         <div>{{shippingAddress.address_line2}}</div>
@@ -37,9 +44,10 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <app-skeleton *ngIf="loading.display$ | async"
+                    <div class="skel-load"
+                        *ngIf="loading.display$ | async"
                         style="height:32px; margin-bottom: .5rem;width: 4rem">
-                    </app-skeleton>
+                    </div>
                     <button mat-flat-button
                         *ngIf="!(loading.display$ | async)"
                         color="primary"
@@ -55,21 +63,28 @@
 
                 <mat-card-content>
                     <div *ngIf="loading.display$ | async">
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
-                        <app-skeleton style="height:14px; margin-bottom: .5rem;width: 60%">
-                        </app-skeleton>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
+                        <div class="skel-load"
+                            style="height:14px; margin-bottom: .5rem;width: 60%">
+                        </div>
                     </div>
                     <div *ngIf="!(loading.display$ | async)">
-                        <div>{{billingAddress.first_name}} {{billingAddress.last_name}}</div>
+                        <div>{{billingAddress.first_name}}
+                            {{billingAddress.last_name}}</div>
                         <div>{{billingAddress.email}}</div>
                         <div>{{billingAddress.address_line1}}</div>
                         <div>{{billingAddress.address_line2}}</div>
@@ -79,9 +94,10 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <app-skeleton *ngIf="loading.display$ | async"
+                    <div class="skel-load"
+                        *ngIf="loading.display$ | async"
                         style="height:32px; margin-bottom: .5rem;width: 4rem">
-                    </app-skeleton>
+                    </div>
                     <button mat-flat-button
                         *ngIf="!(loading.display$ | async)"
                         [routerLink]="['billing']"
@@ -97,23 +113,30 @@
             </mat-card-title>
             <div *ngIf="loading.display$ | async">
                 <div style="display: flex; max-width: 300px; margin-bottom: 1.5rem;">
-                    <app-skeleton style="height:24px; margin-right: 16px; flex: 1 1 auto;">
-                    </app-skeleton>
-                    <app-skeleton style="height:24px; flex: 1 1 auto;">
-                    </app-skeleton>
+                    <div class="skel-load"
+                        style="height:24px; margin-right: 16px; flex: 1 1 auto;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:24px; flex: 1 1 auto;">
+                    </div>
                 </div>
                 <div style="margin-bottom:1.5rem;">
-                    <app-skeleton style="height:32px; margin-bottom: .5rem;">
-                    </app-skeleton>
-                    <app-skeleton style="height:32px; margin-bottom: .5rem;">
-                    </app-skeleton>
-                    <app-skeleton style="height:32px; margin-bottom: .5rem;">
-                    </app-skeleton>
-                    <app-skeleton style="height:32px; ">
-                    </app-skeleton>
+                    <div class="skel-load"
+                        style="height:32px; margin-bottom: .5rem;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:32px; margin-bottom: .5rem;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:32px; margin-bottom: .5rem;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:32px; ">
+                    </div>
                 </div>
-                <app-skeleton style="height:32px; margin-bottom: .5rem;width: 8rem">
-                </app-skeleton>
+                <div class="skel-load"
+                    style="height:32px; margin-bottom: .5rem;width: 8rem">
+                </div>
             </div>
             <div [hidden]="loading.display$ | async">
                 <div class="order-actions">
@@ -122,7 +145,8 @@
                         <mat-select [formControl]="currentStatus"
                             (selectionChange)="changeStatus($event)">
                             <mat-option *ngFor="let status of orderStatuses"
-                                [value]="status.value">{{status.name}}</mat-option>
+                                [value]="status.value">{{status.name}}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="bulk-select">
@@ -190,14 +214,16 @@
                         <ng-container matColumnDef="name">
                             <mat-header-cell *matHeaderCellDef
                                 mat-sort-header>Name</mat-header-cell>
-                            <mat-cell *matCellDef="let item">{{item.product.name}}</mat-cell>
+                            <mat-cell *matCellDef="let item">
+                                {{item.product.name}}</mat-cell>
                             <td mat-footer-cell
                                 *matFooterCellDef></td>
 
                         </ng-container>
                         <ng-container matColumnDef="price">
                             <mat-header-cell *matHeaderCellDef
-                                mat-sort-header>Price ($)</mat-header-cell>
+                                mat-sort-header>Price ($)
+                            </mat-header-cell>
                             <mat-cell *matCellDef="let item">
                                 {{item.product.price | currency:'USD':'':'1.2-2':'en-us'}}
                             </mat-cell>
@@ -212,7 +238,8 @@
                             <mat-header-cell *matHeaderCellDef
                                 mat-sort-header>Qty</mat-header-cell>
                             <mat-cell *matCellDef="let item">
-                                <mat-form-field floatLabel="never"><input matInput
+                                <mat-form-field floatLabel="never">
+                                    <input matInput
                                         [(ngModel)]="item.quantity"
                                         [ngModelOptions]="{standalone: true}"
                                         type="number"></mat-form-field>
@@ -221,8 +248,10 @@
                                 *matFooterCellDef></td>
                         </ng-container>
 
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                        <mat-header-row *matHeaderRowDef="displayedColumns">
+                        </mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns">
+                        </mat-row>
                         <tr mat-footer-row
                             *matFooterRowDef="displayedColumns;"></tr>
                     </mat-table>

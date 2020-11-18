@@ -4,30 +4,41 @@
     </mat-toolbar>
     <mat-card [hidden]="!(loading.display$ | async)"
         class="load-indicator mat-elevation-z3">
-        <app-skeleton style="height:24px; margin-bottom: 1.5rem">
-        </app-skeleton>
-        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
-        </app-skeleton>
-        <app-skeleton style="height:24px; margin-bottom: 1rem">
-        </app-skeleton>
-        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
-        </app-skeleton>
-        <app-skeleton style="height:150px; margin-bottom: 1rem;">
-        </app-skeleton>
-        <div style="display: flex;flex-flow:row nowrap; margin-bottom: 1rem;">
-            <app-skeleton style="height:24px;  flex: 1 1 auto; margin-right: .5rem">
-            </app-skeleton>
-            <app-skeleton style="height:24px;  flex: 1 1 auto; margin-left: .5rem">
-            </app-skeleton>
+        <div class="skel-load"
+            style="height:24px; margin-bottom: 1.5rem">
         </div>
-        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
-        </app-skeleton>
-        <app-skeleton style="height:200px; margin-bottom: 1rem; width: 100%;">
-        </app-skeleton>
-        <app-skeleton style="height:14px; margin-bottom: .25rem;width: 60%">
-        </app-skeleton>
-        <app-skeleton style="height:24px; margin-bottom: 1rem">
-        </app-skeleton>
+        <div class="skel-load"
+            style="height:14px; margin-bottom: .25rem;width: 60%">
+        </div>
+        <div class="skel-load"
+            style="height:24px; margin-bottom: 1rem">
+        </div>
+        <div class="skel-load"
+            style="height:14px; margin-bottom: .25rem;width: 60%">
+        </div>
+        <div class="skel-load"
+            style="height:150px; margin-bottom: 1rem;">
+        </div>
+        <div style="display: flex;flex-flow:row nowrap; margin-bottom: 1rem;">
+            <div class="skel-load"
+                style="height:24px;  flex: 1 1 auto; margin-right: .5rem">
+            </div>
+            <div class="skel-load"
+                style="height:24px;  flex: 1 1 auto; margin-left: .5rem">
+            </div>
+        </div>
+        <div class="skel-load"
+            style="height:14px; margin-bottom: .25rem;width: 60%">
+        </div>
+        <div class="skel-load"
+            style="height:200px; margin-bottom: 1rem; width: 100%;">
+        </div>
+        <div class="skel-load"
+            style="height:14px; margin-bottom: .25rem;width: 60%">
+        </div>
+        <div class="skel-load"
+            style="height:24px; margin-bottom: 1rem">
+        </div>
     </mat-card>
     <mat-card [hidden]="(loading.display$ | async)"
         class="content mat-elevation-z3">

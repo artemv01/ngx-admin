@@ -1,18 +1,3 @@
-<!-- <mat-nav-list> -->
-<!--  <a mat-list-item
-        [routerLink]="nav.path"
-        routerLinkActive="item-active"
-        *ngFor="let nav of navItems">
-        <div class="item-name">
-            <mat-icon>{{nav.icon}}</mat-icon><span>{{nav.name}}</span>
-        </div>
-        <mat-icon class="expand-btn"
-            *ngIf="nav.children?.length">
-            expand_more
-        </mat-icon>
-    </a> -->
-<!-- </mat-nav-list> -->
-
 <a mat-list-item
     [style.padding-left]="(depth * 12) + 'px'"
     (click)="onItemSelected(item)"

@@ -22,7 +22,6 @@ import { ImageDropComponent } from './components/image-drop/image-drop.component
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
-import { SkeletonComponent } from './components/skeleton/skeleton.component';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -31,7 +30,6 @@ import { SkeletonComponent } from './components/skeleton/skeleton.component';
     NotificationsComponent,
     NavItemComponent,
     StarRatingComponent,
-    SkeletonComponent,
   ],
   imports: [
     CommonModule,
@@ -58,7 +56,6 @@ import { SkeletonComponent } from './components/skeleton/skeleton.component';
     ItemsTableComponent,
     ImageDropComponent,
     StarRatingComponent,
-    SkeletonComponent,
   ],
 })
 export class SharedModule {}

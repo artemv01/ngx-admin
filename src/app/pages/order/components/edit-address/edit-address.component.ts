@@ -82,6 +82,9 @@ export class EditAddressComponent implements OnInit, OnDestroy {
     this.destroy.next(null);
   }
   edit() {
+    if (this.addressForm.invalid) {
+      return false;
+    }
     let req = {};
     if (this.type === 'shipping') {
       req = {

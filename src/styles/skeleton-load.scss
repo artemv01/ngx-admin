@@ -1,7 +1,7 @@
 $base-color: #ddd;
 $indicator: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
 
-:host::after {
+.skel-load::after {
     content: '';
     display: block;
     background-image: $indicator;
@@ -9,7 +9,7 @@ $indicator: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transp
     height: 100%;
     animation: skeleton-load 0.8s infinite ease-in-out;
 }
-:host {
+.skel-load {
     display: block;
     width: 100%;
     height: 32px;

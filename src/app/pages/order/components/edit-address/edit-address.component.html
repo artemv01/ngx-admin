@@ -12,31 +12,41 @@
             </mat-card-title>
             <div>
                 <div style="display: flex;margin-bottom: 1rem;">
-                    <app-skeleton style="height:24px; margin-right: 16px; flex: 1 1 auto;">
-                    </app-skeleton>
-                    <app-skeleton style="height:24px; flex: 1 1 auto;">
-                    </app-skeleton>
+                    <div class="skel-load"
+                        style="height:24px; margin-right: 16px; flex: 1 1 auto;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:24px; flex: 1 1 auto;">
+                    </div>
                 </div>
                 <div style="display: flex;margin-bottom: 1rem;">
-                    <app-skeleton style="height:24px; margin-right: 16px; flex: 1 1 auto;">
-                    </app-skeleton>
-                    <app-skeleton style="height:24px; flex: 1 1 auto;">
-                    </app-skeleton>
+                    <div class="skel-load"
+                        style="height:24px; margin-right: 16px; flex: 1 1 auto;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:24px; flex: 1 1 auto;">
+                    </div>
                 </div>
                 <div style="display: flex;margin-bottom: 1rem;">
-                    <app-skeleton style="height:24px; margin-right: 16px; flex: 1 1 auto;">
-                    </app-skeleton>
-                    <app-skeleton style="height:24px; flex: 1 1 auto;">
-                    </app-skeleton>
+                    <div class="skel-load"
+                        style="height:24px; margin-right: 16px; flex: 1 1 auto;">
+                    </div>
+                    <div class="skel-load"
+                        style="height:24px; flex: 1 1 auto;">
+                    </div>
                 </div>
-                <app-skeleton style="height:24px;margin-bottom:1rem;">
-                </app-skeleton>
-                <app-skeleton style="height:24px;margin-bottom:1rem;">
-                </app-skeleton>
-                <app-skeleton style="height:24px;margin-bottom:1.5rem;">
-                </app-skeleton>
-                <app-skeleton style="height:32px; width: 8rem">
-                </app-skeleton>
+                <div class="skel-load"
+                    style="height:24px;margin-bottom:1rem;">
+                </div>
+                <div class="skel-load"
+                    style="height:24px;margin-bottom:1rem;">
+                </div>
+                <div class="skel-load"
+                    style="height:24px;margin-bottom:1.5rem;">
+                </div>
+                <div class="skel-load"
+                    style="height:32px; width: 8rem">
+                </div>
 
             </div>
         </mat-card>
@@ -130,6 +140,7 @@
                             placeholder="">
                     </mat-form-field>
                     <button mat-flat-button
+                        [disabled]="this.addressForm.invalid"
                         class="icon-button"
                         color="primary"
                         type="submit">
