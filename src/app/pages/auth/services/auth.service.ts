@@ -20,10 +20,6 @@ export class AuthService {
     private router: Router,
     private alert: AlertService
   ) {
-    this.initAuth();
-  }
-
-  initAuth() {
     const storedAuth = JSON.parse(localStorage.getItem('userData'));
     let user: UserAuth = null;
     if (storedAuth) {

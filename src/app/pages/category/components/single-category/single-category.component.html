@@ -2,50 +2,96 @@
     <mat-toolbar class="page-header">
         <h1>{{categoryId ? 'Edit' : 'Add'}} Category</h1>
     </mat-toolbar>
-    <mat-card class="mat-elevation-z3">
-        <div class="spinner-container"
-            *ngIf="loading.display$ | async">
-            <mat-spinner></mat-spinner>
-        </div>
-        <form *ngIf="!(loading.display$ | async)"
-            (submit)="categoryId ? editCategory() : addCategory()"
-            [formGroup]="categoryForm">
-            <mat-form-field>
-                <mat-label>Category name</mat-label>
-
-                <input required
-                    formControlName="name"
-                    matInput
-                    placeholder="Category name">
-                <mat-error *ngIf="name.hasError('required')">Category name is required.</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Category description</mat-label>
-                <textarea requried
-                    formControlName="description"
-                    rows="10"
-                    matInput
-                    placeholder="Category description"></textarea>
-
-            </mat-form-field>
-            <div class="bottom-buttons">
-                <button mat-flat-button
-                    (click)="location.back()"
-                    class="icon-button"
-                    color="accent"
-                    type="button">
-                    <mat-icon>arrow_back</mat-icon>
-                    Back
-                </button>
-                <button mat-flat-button
-                    class="icon-button"
-                    color="primary"
-                    [disabled]="categoryForm.invalid"
-                    type="submit">
-                    <mat-icon>{{categoryId ? 'edit' : 'save'}}</mat-icon>
-                    {{categoryId ? 'Edit' : 'Add'}}
-                </button>
+    <div class="container">
+        <mat-card *ngIf="loading.display$ | async"
+            class="load-indicator mat-elevation-z3">
+            <div class="skel-load"
+                style="height:24px; margin-bottom:1.5rem;width: 50%">
             </div>
-        </form>
-    </mat-card>
+            <div class="skel-load"
+                style="height:24px; margin-bottom:1.5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div class="skel-load"
+                style="height:14px; margin-bottom: .5rem;width: 100%">
+            </div>
+            <div style="display:flex;width: 17rem">
+                <div class="skel-load"
+                    style="height:32px; margin-top: 1.5rem;margin-right:1rem;flex: auto;">
+                </div>
+                <div class="skel-load"
+                    style="height:32px; margin-top: 1.5rem;flex: auto;">
+                </div>
+            </div>
+
+        </mat-card>
+        <mat-card class="mat-elevation-z3">
+            <mat-card-title *ngIf="categoryName">
+                <h4>
+                    {{categoryName}}
+                </h4>
+            </mat-card-title>
+            <form *ngIf="!(loading.display$ | async)"
+                (submit)="categoryId ? editCategory() : addCategory()"
+                [formGroup]="categoryForm">
+                <mat-form-field>
+                    <mat-label>Category name</mat-label>
+
+                    <input required
+                        formControlName="name"
+                        matInput
+                        placeholder="Category name">
+                    <mat-error *ngIf="name.hasError('required')">Category name is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Category description</mat-label>
+                    <textarea requried
+                        formControlName="description"
+                        rows="10"
+                        matInput
+                        placeholder="Category description"></textarea>
+
+                </mat-form-field>
+                <div class="bottom-buttons">
+                    <button mat-flat-button
+                        (click)="location.back()"
+                        class="icon-button"
+                        color="accent"
+                        type="button">
+                        <mat-icon>arrow_back</mat-icon>
+                        Back
+                    </button>
+                    <button mat-flat-button
+                        class="icon-button"
+                        color="primary"
+                        [disabled]="categoryForm.invalid"
+                        type="submit">
+                        <mat-icon>{{categoryId ? 'edit' : 'save'}}</mat-icon>
+                        {{categoryId ? 'Edit' : 'Add'}}
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
 </app-layout>

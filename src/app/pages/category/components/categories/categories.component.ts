@@ -47,7 +47,7 @@ export class CategoriesComponent implements OnInit {
     limit: 10,
     page: 1,
   };
-  displayedColumns = ['select', 'name', 'createdAt'];
+  displayedColumns = ['select', 'view', 'name', 'description', 'createdAt'];
 
   totalItems: number = 0;
 
@@ -66,7 +66,6 @@ export class CategoriesComponent implements OnInit {
   constructor(
     @Attribute('itemsType') itemsType: string,
     private categoryService: CategoryService,
-    private fb: FormBuilder,
     private notify: NotificationService
   ) {
     this.dataSource = new ItemsDataSource<Category>(

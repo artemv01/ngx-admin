@@ -5,12 +5,22 @@
         <div class="main-title">
             <button mat-mini-fab
                 class="toggle-menu-btn"
+                aria-label="toggle sidebar"
                 (click)="sidebarOpen = sidebarOpen ? false : true">
                 <mat-icon *ngIf="sidebarOpen">menu</mat-icon>
                 <mat-icon *ngIf="!sidebarOpen">arrow_back</mat-icon>
             </button>
             <h1 class="app-name">Admin Panel</h1>
         </div>
+        <div style="flex: auto">
+        </div>
+        <button mat-mini-fab
+            aria-label="log out"
+            (click)="authService.logout()"
+            class="toggle-menu-btn">
+            <mat-icon>logout</mat-icon>
+        </button>
+
     </mat-toolbar>
 
     <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

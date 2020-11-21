@@ -23,6 +23,7 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
     name: ['', [Validators.required]],
     description: [''],
   });
+  categoryName: string;
 
   get name(): AbstractControl {
     return this.categoryForm.get('name');
@@ -100,6 +101,7 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
     this.loading.show();
     this.api.getOne(this.categoryId).subscribe(
       (category: Category) => {
+        this.categoryName = category.name;
         this.categoryForm.patchValue(category);
         this.loading.hide();
       },
