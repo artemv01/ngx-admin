@@ -82,6 +82,13 @@
                             mat-sort-header>Author Email</mat-header-cell>
                         <mat-cell *matCellDef="let item">{{item.authorEmail}}</mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="product">
+                        <mat-header-cell *matHeaderCellDef
+                            mat-sort-header>Product</mat-header-cell>
+                        <mat-cell *matCellDef="let item"><a class="one-line"
+                                [routerLink]="['/dashboard', 'products', 'edit', item.productId]">{{item.productName}}</a>
+                        </mat-cell>
+                    </ng-container>
                     <ng-container matColumnDef="rating">
                         <mat-header-cell *matHeaderCellDef
                             mat-sort-header>Rating</mat-header-cell>
@@ -93,7 +100,7 @@
                         <mat-header-cell *matHeaderCellDef
                             mat-sort-header>date</mat-header-cell>
                         <mat-cell *matCellDef="let item">
-                            <div class="comment-text">{{item.content}}</div>
+                            <div class="one-line">{{item.content}}</div>
                         </mat-cell>
 
                     </ng-container>

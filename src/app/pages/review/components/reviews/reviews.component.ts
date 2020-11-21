@@ -51,6 +51,7 @@ export class ReviewsComponent implements OnInit {
     'view',
     'author_name',
     'author_email',
+    'product',
     'rating',
     'comment_text',
   ];

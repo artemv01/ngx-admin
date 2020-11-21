@@ -173,3 +173,7 @@ mat-card-title.mat-card-title {
         margin-bottom: 1.5rem;
     }
 }
+
+mat-form-field.mat-form-field-type-rating-input .mat-form-field-infix {
+    padding-bottom: 0;
+}

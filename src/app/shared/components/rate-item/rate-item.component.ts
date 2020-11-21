@@ -1,5 +1,5 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Optional, Self } from '@angular/core';
+import { ElementRef, HostListener, Optional, Self } from '@angular/core';
 import {
   Component,
   OnInit,
@@ -32,28 +32,46 @@ const RATE_ITEM_VALUE_ACCESSOR: any = {
   ],
 })
 export class RateItemComponent
-  implements OnInit, OnDestroy, MatFormFieldControl<number> {
+  implements
+    OnInit,
+    OnDestroy,
+    ControlValueAccessor,
+    MatFormFieldControl<number> {
   @HostBinding() id = `rating-input-${RateItemComponent.nextId++}`;
+  @HostListener('mouseleave')
+  restoreRating() {
+    if (!this.isTouchScreen()) {
+      this.rate();
+    }
+  }
 
   starWidth = 24;
   ratingState = Array(5).fill('star_outline');
 
-  private rating: number = 0;
-
   private onChange: Function;
   private onTouched: Function;
+  private _value: number = 0;
+  private _required: boolean = false;
+  private _disabled: boolean = false;
 
   static nextId = 0;
-  placeholder = '';
   focused = false;
   shouldLabelFloat = true;
   stateChanges = new Subject<void>();
   get empty() {
-    return !this.rating;
+    return !this.value;
   }
 
   errorState = false;
   controlType = 'rating-input';
+
+  public placeholder = '';
+
+  @Input('aria-describedby') userAriaDescribedBy: string;
+  setDescribedByIds(ids: string[]) {
+    const controlElement = this._elementRef.nativeElement;
+    controlElement.setAttribute('aria-describedby', ids.join(' '));
+  }
 
   @Input()
   get disabled(): boolean {
@@ -61,9 +79,7 @@ export class RateItemComponent
   }
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
-    this.stateChanges.next();
   }
-  private _disabled = false;
 
   @Input()
   get required() {
@@ -71,19 +87,21 @@ export class RateItemComponent
   }
   set required(req) {
     this._required = coerceBooleanProperty(req);
-    this.stateChanges.next();
   }
-  private _required = false;
 
   @Input()
   get value() {
-    return this.rating;
+    return this._value;
   }
   set value(rating: number) {
-    this.rating = rating;
+    this._value = rating;
+    this.stateChanges.next();
   }
 
-  constructor(@Optional() @Self() public ngControl: NgControl) {
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+    private _elementRef: ElementRef
+  ) {
     if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
@@ -91,13 +109,11 @@ export class RateItemComponent
     this.onTouched = () => {};
     this.disabled = false;
   }
-  isTouchScreen() {
-    return 'ontouchstart' in document.documentElement;
-  }
 
   ngOnInit(): void {}
 
   hoverRate(starIndex: number, lastStar: string) {
+    if (this.isTouchScreen()) return;
     this.ratingState = this.ratingState.map((_, index) => {
       if (index < starIndex) {
         return 'star';
@@ -109,45 +125,38 @@ export class RateItemComponent
     });
   }
 
-  rate(newRating: number = this.rating) {
-    this.rating = newRating;
+  rate(newRating: number = this.value) {
+    this.value = newRating;
     this.buildStars();
-    this.stateChanges.next();
-    /*   this.onChange(this.rating);
-    this.onTouched(); */
+
+    console.log('from comp', this.value);
+    this.onChange(this.value);
+    this.onTouched();
   }
 
   writeValue(rating: number): void {
     if (rating === null) {
       rating = 0;
     }
-    this.rating = rating;
+    this.value = rating;
 
     this.buildStars();
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
   buildStars() {
-    if (this.rating < 1) {
-      if (this.rating === 0.5) {
+    if (this.value < 1) {
+      if (this.value === 0.5) {
         this.ratingState[0] = 'star_half';
         this.ratingState.fill('star_outline', 1);
         return;
-      } else if (this.rating === 0) {
+      } else if (this.value === 0) {
         this.ratingState.fill('star_outline', 0);
       } else {
         return;
       }
     }
 
-    let newRating = this.rating - 1;
+    let newRating = this.value - 1;
     let truncated = Math.trunc(newRating);
     let lastIndex = 0;
 
@@ -165,6 +174,18 @@ export class RateItemComponent
         this.ratingState[lastIndex] = 'star_half';
       }
     }
+  }
+  onContainerClick(event: MouseEvent) {}
+
+  private isTouchScreen() {
+    return 'ontouchstart' in document.documentElement;
+  }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
   ngOnDestroy() {

@@ -6,3 +6,12 @@
     display: inline-block;
     background: transparent;
 }
+:host {
+    display: flex;
+    flex-flow: row nowrap;
+    cursor: pointer;
+}
+.star-elem {
+    position: relative;
+    color: #ecc94b;
+}
