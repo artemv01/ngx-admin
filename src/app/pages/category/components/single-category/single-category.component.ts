@@ -2,13 +2,15 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { first, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
+import { StorageService } from '@app/shared/services/storage.service';
+import { ItemType } from '@app/pages/product/models/item-type';
 
 @Component({
   selector: 'app-single-category',
@@ -37,23 +39,39 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private api: CategoryService,
+    private categoryService: CategoryService,
     public location: Location,
     public loading: LoadingService,
-    public notification: NotificationService
+    public notification: NotificationService,
+    private store: StorageService<Category>
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params) => {
-      this.savedStatus = params.status;
+      this.savedStatus = params['status'];
     });
+    this.categoryId = this.route.snapshot.paramMap.get('id');
+    if (this.categoryId) {
+      this.store.select$
+        .pipe(
+          first(),
+          withLatestFrom(this.store.type$),
+          mergeMap(
+            ([item, type]): Observable<Category> => {
+              const id = this.categoryId;
+              if (id === item?._id && type == ItemType.CATEGORY) {
+                return of(item);
+              }
 
-    this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
-      this.categoryId = params.get('id') === 'add' ? '' : params.get('id');
-      if (this.categoryId) {
-        this._getCategory();
-      }
-    });
+              return this.categoryService.getOne(id);
+            }
+          )
+        )
+        .subscribe((item: Category) => {
+          this.categoryName = item.name;
+          this.categoryForm.patchValue(item);
+        });
+    }
   }
 
   ngAfterViewInit() {
@@ -67,48 +85,29 @@ export class SingleCategoryComponent implements OnInit, AfterViewInit {
   }
 
   editCategory() {
-    this.loading.show();
-    this.api.edit(this.categoryForm.value, this.categoryId).subscribe(
-      (result) => {
-        this.loading.hide();
+    this.categoryService
+      .edit(this.categoryForm.value, this.categoryId)
+      .subscribe((result) => {
         this.notification.push({
           message: 'Category edited!',
         });
-      },
-      () => this.loading.hide()
-    );
+      });
   }
 
   addCategory() {
     if (this.categoryForm.invalid) return;
-    this.loading.show();
-    this.api.create(this.categoryForm.value).subscribe(
-      (result) => {
-        this.loading.hide();
-
-        this.router.navigate(['/dashboard/categories/edit/', result], {
-          queryParams: {
-            status: 'success',
-          },
-          queryParamsHandling: 'merge',
-        });
-      },
-      () => this.loading.hide()
-    );
+    this.categoryService.create(this.categoryForm.value).subscribe((result) => {
+      this.router.navigate(['/dashboard/categories/edit/', result._id], {
+        queryParams: {
+          status: 'success',
+        },
+        queryParamsHandling: 'merge',
+      });
+    });
   }
 
-  private _getCategory() {
-    this.loading.show();
-    this.api.getOne(this.categoryId).subscribe(
-      (category: Category) => {
-        this.categoryName = category.name;
-        this.categoryForm.patchValue(category);
-        this.loading.hide();
-      },
-      () => {
-        this.loading.hide();
-      }
-    );
+  back() {
+    this.router.navigate(['/dashboard', 'categories']);
   }
 
   ngOnDestroy() {

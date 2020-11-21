@@ -7,6 +7,11 @@
                 color="primary"
                 aria-label="login spinner"></mat-spinner>
         </div>
+        <p *ngIf="environment.staging"
+            class="staging-message">Please note that this is the staging deploy, changes
+            you make
+            won't be reflected
+            on the production!</p>
         <form *ngIf="!loading"
             (submit)="login()"
             [formGroup]="loginForm">

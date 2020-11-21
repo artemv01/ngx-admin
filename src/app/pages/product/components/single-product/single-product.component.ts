@@ -111,15 +111,14 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private api: ProductsService,
+    private productService: ProductsService,
     private alert: AlertService,
     public location: Location,
     public loading: LoadingService,
     public categoryService: CategoryService,
     public notification: NotificationService,
     private lastUrl: LastRouteService,
-    private store: StorageService<Product>,
-    private productService: ProductsService
+    private store: StorageService<Product>
   ) {
     this.filterCats$ = this.catsInput.valueChanges.pipe(
       startWith(null),
@@ -213,7 +212,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
       ...this.productForm.value,
     };
 
-    this.api.edit(formData, this.productId).subscribe((updated) => {
+    this.productService.edit(formData, this.productId).subscribe((updated) => {
       this.productName = this.name.value;
 
       this.notification.push({
@@ -230,7 +229,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
       ...this.productForm.value,
     };
 
-    this.api.create(formData).subscribe((product) => {
+    this.productService.create(formData).subscribe((product) => {
       this.router.navigate(['/dashboard/products/edit/', product._id], {
         queryParams: {
           status: 'success',
@@ -289,7 +288,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
   /* private _getProduct() {
     this.loading.show();
     forkJoin([
-      this.api.getOne(this.productId),
+      this.productService.getOne(this.productId),
       this.categoryService.getAll(),
     ]).subscribe(
       ([product, categoryList]) => {

@@ -70,7 +70,7 @@ export class SingleOrderComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private api: OrderService,
+    private orderService: OrderService,
     public loading: LoadingService,
     private route: ActivatedRoute,
     private notify: NotificationService,
@@ -82,7 +82,7 @@ export class SingleOrderComponent implements OnInit {
       this.savedStatus = params['status'];
     });
     this.itemId = this.route.snapshot.paramMap.get('id');
-    this.api.getOne(this.itemId).subscribe((result) => {
+    this.orderService.getOne(this.itemId).subscribe((result) => {
       this.cart = result.cart;
       this.cart$.next(this.cart);
       this.orderTotal = result.total;
@@ -123,7 +123,7 @@ export class SingleOrderComponent implements OnInit {
     this.cart.forEach((item) => {
       updateRQ[item.product.originalId] = item.quantity;
     });
-    this.api
+    this.orderService
       .edit(
         {
           cartUpdateRQ: updateRQ,
@@ -143,7 +143,7 @@ export class SingleOrderComponent implements OnInit {
       status: status,
       orders: [this.itemId],
     };
-    this.api.changeStatus(req).subscribe((updates) => {
+    this.orderService.changeStatus(req).subscribe((updates) => {
       this.currentStatus.setValue(updates);
       this.notify.push({
         type: 'success',

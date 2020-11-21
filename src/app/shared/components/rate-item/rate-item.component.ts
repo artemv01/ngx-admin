@@ -129,7 +129,6 @@ export class RateItemComponent
     this.value = newRating;
     this.buildStars();
 
-    console.log('from comp', this.value);
     this.onChange(this.value);
     this.onTouched();
   }

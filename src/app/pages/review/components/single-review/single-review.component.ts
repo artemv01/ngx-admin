@@ -57,9 +57,6 @@ export class SingleReviewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.editForm
-      .get('rating')
-      .valueChanges.subscribe((val) => console.log(val));
     this.itemId = this.route.snapshot.paramMap.get('id');
     if (this.itemId) {
       this.reviewService.getOne(this.itemId).subscribe((review) => {

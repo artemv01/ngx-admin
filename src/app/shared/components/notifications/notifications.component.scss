@@ -57,13 +57,13 @@
     }
 }
 .notification-icon {
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    @include media-md {
-        margin-bottom: 0;
-    }
+    // @include media-md {
+    //     margin-bottom: 0;
+    // }
 }
 
 mat-icon {
@@ -81,5 +81,10 @@ mat-icon {
 }
 
 .message {
+    margin-top: 1rem;
+    @include media-md {
+        margin-top: 0;
+    }
     color: white;
+    display: inline-block;
 }

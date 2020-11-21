@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '@root/environments/environment';
 import { LoginResp } from '../../models/login-resp';
 import { UserAuth } from '../../models/user-auth';
 import { AuthService } from '../../services/auth.service';
@@ -11,16 +12,23 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  environment = environment;
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router
   ) {}
 
+  private fillEmail: string = environment.staging ? 'test@example.com' : '';
+  private fillPassword: string = environment.staging ? 'password12' : '';
+
   loading = false;
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    email: [this.fillEmail, [Validators.required, Validators.email]],
+    password: [
+      this.fillPassword,
+      [Validators.required, Validators.minLength(8)],
+    ],
   });
   get email() {
     return this.loginForm.get('email');

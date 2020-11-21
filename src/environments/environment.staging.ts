@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  staging: false,
-  apiUrl: 'http://localhost:4500/',
+  staging: true,
+  apiUrl: 'https://ngx-storefront-api-test.herokuapp.com/',
 };
 
 /*

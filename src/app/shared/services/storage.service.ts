@@ -5,11 +5,13 @@ import { ItemType } from '../../pages/product/models/item-type';
 @Injectable({
   providedIn: 'root',
 })
+/* Temprorary solution. 
+I think I will integrate a real state managment solution in the future.  */
 export class StorageService<T> {
   private _store: BehaviorSubject<T> = new BehaviorSubject<T>(undefined);
-  private _objectType: BehaviorSubject<ItemType> = new BehaviorSubject<
-    ItemType
-  >(undefined);
+  private _objectType: BehaviorSubject<ItemType> = new BehaviorSubject<ItemType>(
+    undefined
+  );
 
   public type$: Observable<ItemType> = this._objectType.asObservable();
   public select$: Observable<T> = this._store.asObservable();

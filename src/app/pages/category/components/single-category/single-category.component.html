@@ -45,14 +45,14 @@
             </div>
 
         </mat-card>
-        <mat-card class="mat-elevation-z3">
+        <mat-card [hidden]="loading.display$ | async"
+            class="mat-elevation-z3">
             <mat-card-title *ngIf="categoryName">
                 <h4>
                     {{categoryName}}
                 </h4>
             </mat-card-title>
-            <form *ngIf="!(loading.display$ | async)"
-                (submit)="categoryId ? editCategory() : addCategory()"
+            <form (submit)="categoryId ? editCategory() : addCategory()"
                 [formGroup]="categoryForm">
                 <mat-form-field>
                     <mat-label>Category name</mat-label>
@@ -75,7 +75,7 @@
                 </mat-form-field>
                 <div class="bottom-buttons">
                     <button mat-flat-button
-                        (click)="location.back()"
+                        (click)="back()"
                         class="icon-button"
                         color="accent"
                         type="button">
