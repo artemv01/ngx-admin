@@ -6,7 +6,7 @@ import { HTTP_ERROR_HANDLER } from '@app/shared/helpers/handle-error';
 import { ItemService } from '@app/shared/models/item-service';
 import { environment } from '@root/environments/environment';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 import { LoadingService } from '@app/shared/services/loading.service';
 import { Review } from '../models/review';
@@ -30,7 +30,7 @@ export class ReviewService implements ItemService<Review> {
     return this.http
       .get<ItemsResp<Review>>(environment.apiUrl + `review/?${params}`)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
         catchError<ItemsResp<Review>, Observable<any>>((err) =>
           this.handleError(err)
         )
@@ -40,7 +40,7 @@ export class ReviewService implements ItemService<Review> {
     this.loading.show();
 
     return this.http.get<Review>(environment.apiUrl + `review/${id}`).pipe(
-      tap(() => this.loading.hide()),
+      finalize(() => this.loading.hide()),
 
       catchError<Review, Observable<Review>>((err) => this.handleError(err))
     );
@@ -52,7 +52,7 @@ export class ReviewService implements ItemService<Review> {
     return this.http
       .patch<Review>(environment.apiUrl + `review/${itemId}`, data)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
 
         catchError<Review, Observable<Review>>((err) => this.handleError(err))
       );
@@ -66,7 +66,7 @@ export class ReviewService implements ItemService<Review> {
         itemIds: itemIds,
       })
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
         catchError((err) => this.handleError(err))
       );
   }

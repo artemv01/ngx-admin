@@ -6,7 +6,7 @@ import { HTTP_ERROR_HANDLER } from '@app/shared/helpers/handle-error';
 import { ItemService } from '@app/shared/models/item-service';
 import { environment } from '@root/environments/environment';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { ChangeStatusRQ } from '../models/change-status-rq';
 import { Order } from '../models/order';
 import { OrderStatus } from '../models/order-status';
@@ -31,7 +31,7 @@ export class OrderService implements ItemService<Order> {
     return this.http
       .get<ItemsResp<Order>>(environment.apiUrl + `order/?${params}`)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
         catchError<ItemsResp<Order>, Observable<any>>((err) =>
           this.handleError(err)
         )
@@ -41,7 +41,7 @@ export class OrderService implements ItemService<Order> {
     this.loading.show();
 
     return this.http.get<Order>(environment.apiUrl + `order/${id}`).pipe(
-      tap(() => this.loading.hide()),
+      finalize(() => this.loading.hide()),
 
       catchError<Order, Observable<Order>>((err) => this.handleError(err))
     );
@@ -53,7 +53,7 @@ export class OrderService implements ItemService<Order> {
     return this.http
       .post<Order['_id']>(environment.apiUrl + `order`, data)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
 
         catchError<Order['_id'], Observable<Order['_id']>>((err) =>
           this.handleError(err)
@@ -67,7 +67,7 @@ export class OrderService implements ItemService<Order> {
     return this.http
       .patch<Order>(environment.apiUrl + `order/${orderId}`, data)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
 
         catchError<Order, Observable<Order>>((err) => this.handleError(err))
       );
@@ -79,7 +79,7 @@ export class OrderService implements ItemService<Order> {
     return this.http
       .patch<string>(environment.apiUrl + `order/change-order-status`, data)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
 
         catchError<string, Observable<string>>((err) => this.handleError(err))
       );
@@ -93,7 +93,7 @@ export class OrderService implements ItemService<Order> {
         itemIds: orderIds,
       })
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
         catchError((err) => this.handleError(err))
       );
   }

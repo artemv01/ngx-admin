@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { ItemsQuery } from '@app/shared/models/items-query';
 import { ItemsResp } from '@app/shared/models/items-resp';
 import { HTTP_ERROR_HANDLER } from 'src/app/shared/helpers/handle-error';
@@ -34,7 +34,7 @@ export class ProductsService implements ItemService<Product> {
     return this.http
       .get<ItemsResp<Product>>(environment.apiUrl + `product/?${params}`)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
 
         catchError<ItemsResp<Product>, Observable<any>>((err) =>
           this.handleError(err)
@@ -45,7 +45,7 @@ export class ProductsService implements ItemService<Product> {
     this.loading.show();
 
     return this.http.get<Product>(environment.apiUrl + `product/${id}`).pipe(
-      tap(() => this.loading.hide()),
+      finalize(() => this.loading.hide()),
 
       catchError<Product, Observable<Product>>((err) => this.handleError(err))
     );
@@ -60,7 +60,7 @@ export class ProductsService implements ItemService<Product> {
     }
     form.append('categories', JSON.stringify(categories));
     return this.http.post<Product>(environment.apiUrl + `product`, form).pipe(
-      tap(() => this.loading.hide()),
+      finalize(() => this.loading.hide()),
       tap((product) => this.store.save(product, this.itemType)),
       catchError<Product, Observable<Product>>((err) => this.handleError(err))
     );
@@ -77,7 +77,7 @@ export class ProductsService implements ItemService<Product> {
     return this.http
       .patch<Product>(environment.apiUrl + `product/${productId}`, form)
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
 
         tap((product) => this.store.save(product, this.itemType)),
         catchError<Product, Observable<Product>>((err) => this.handleError(err))
@@ -91,7 +91,7 @@ export class ProductsService implements ItemService<Product> {
         productIds: productIds,
       })
       .pipe(
-        tap(() => this.loading.hide()),
+        finalize(() => this.loading.hide()),
         catchError((err) => this.handleError(err))
       );
   }
