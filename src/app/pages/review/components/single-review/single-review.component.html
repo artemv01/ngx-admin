@@ -76,15 +76,17 @@
                 </mat-form-field>
                 <div>
                 </div>
-                <mat-form-field appearance="none">
+                <mat-form-field appearance="none"
+                    requried>
                     <mat-label>Rating</mat-label>
                     <app-rate-item ngDefaultControl
+                        required
                         formControlName="rating"></app-rate-item>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Review text</mat-label>
-                    <textarea requried
-                        formControlName="content"
+                    <textarea formControlName="content"
+                        required
                         rows="10"
                         matInput
                         placeholder="Review text"></textarea>
