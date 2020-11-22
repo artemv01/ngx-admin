@@ -7,7 +7,7 @@
                 color="primary"
                 aria-label="login spinner"></mat-spinner>
         </div>
-        <p *ngIf="environment.staging"
+        <p *ngIf="environment.staging && !loading"
             class="staging-message">Please note that this is the staging deploy, changes
             you make
             won't be reflected
@@ -15,7 +15,7 @@
         <form *ngIf="!loading"
             (submit)="login()"
             [formGroup]="loginForm">
-            <mat-form-field>
+            <mat-form-field>`
                 <mat-label>Email</mat-label>
                 <input matInput
                     required
