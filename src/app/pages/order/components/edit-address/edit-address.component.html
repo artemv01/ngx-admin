@@ -117,15 +117,26 @@
                                 placeholder="Cusotmer's apartment, suite, unit etc. (Optional)">
                         </mat-form-field>
                     </div>
-                    <mat-form-field>
-                        <mat-label>Country</mat-label>
-                        <input required
-                            formControlName="country"
-                            matInput
-                            placeholder="Country">
-                        <mat-error *ngIf="country.hasError('required')">Country is required.
-                        </mat-error>
-                    </mat-form-field>
+                    <div class="addr-row">
+                        <mat-form-field>
+                            <mat-label>City</mat-label>
+                            <input required
+                                formControlName="city"
+                                matInput
+                                placeholder="City">
+                            <mat-error *ngIf="city.hasError('required')">City is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Country</mat-label>
+                            <input required
+                                formControlName="country"
+                                matInput
+                                placeholder="Country">
+                            <mat-error *ngIf="country.hasError('required')">Country is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                     <mat-form-field>
                         <mat-label>State</mat-label>
                         <input formControlName="state"
