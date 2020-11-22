@@ -238,7 +238,8 @@
                             <mat-header-cell *matHeaderCellDef
                                 mat-sort-header>Qty</mat-header-cell>
                             <mat-cell *matCellDef="let item">
-                                <mat-form-field floatLabel="never">
+                                <mat-form-field floatLabel="never"
+                                    class="quantity-input">
                                     <input matInput
                                         [(ngModel)]="item.quantity"
                                         [ngModelOptions]="{standalone: true}"
