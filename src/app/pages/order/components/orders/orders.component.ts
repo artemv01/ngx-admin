@@ -47,7 +47,14 @@ export class OrdersComponent implements OnInit {
     limit: 10,
     page: 1,
   };
-  displayedColumns = ['select', 'view', 'customer', 'total', 'status', 'date'];
+  displayedColumns = [
+    'select',
+    'view',
+    'customer',
+    'total',
+    'status',
+    'createdAt',
+  ];
 
   totalItems: number = 0;
 

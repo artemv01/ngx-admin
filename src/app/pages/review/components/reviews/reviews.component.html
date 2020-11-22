@@ -96,11 +96,21 @@
                             <app-star-rating [rating]="item.rating"></app-star-rating>
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="comment_text">
+                    <ng-container matColumnDef="content">
                         <mat-header-cell *matHeaderCellDef
-                            mat-sort-header>date</mat-header-cell>
+                            mat-sort-header>Text</mat-header-cell>
                         <mat-cell *matCellDef="let item">
                             <div class="one-line">{{item.content}}</div>
+                        </mat-cell>
+
+                    </ng-container>
+                    <ng-container matColumnDef="createdAt">
+                        <mat-header-cell *matHeaderCellDef
+                            mat-sort-header>Created</mat-header-cell>
+                        <mat-cell *matCellDef="let item">
+                            <div class="one-line">
+                                {{item.createdAt | date: 'd MMM yyyy HH:mm'}}
+                            </div>
                         </mat-cell>
 
                     </ng-container>

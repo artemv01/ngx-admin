@@ -53,7 +53,8 @@ export class ReviewsComponent implements OnInit {
     'author_email',
     'product',
     'rating',
-    'comment_text',
+    'content',
+    'createdAt',
   ];
 
   totalItems: number = 0;
