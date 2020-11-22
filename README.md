@@ -1,27 +1,41 @@
-# NgxStorefrontAdmin
+# A simple admin dashboard on Angular & Angular Material
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.0.
+Ngx-storefront is an example of a modern eCommerce application built on the MEAN stack. The project consists of 3 parts:
 
-## Development server
+*   the Customer application [artemv01/ngx-storefront][ngx-storefront]
+*   the REST API [artemv01/ngx-storefront-api][ngx-storefront-api]
+*   and the Admin application [artemv01/ngx-admin][ngx-admin]
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This is a repository for the the Admin application. 
 
-## Code scaffolding
+## Technology stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The technology stack used for this project:
+* [Angular][angular]
+* [Angular Material][material]
 
-## Build
+Deployed on Netlify.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## What’s currently missing
 
-## Running unit tests
+Integration/unit tests were omitted so far and might be implemented in the future.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Setting up development environment
 
-## Running end-to-end tests
+> This section is a work in progress.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Contributing
 
-## Further help
+If you are interested and have any ideas for features, please open an [issue](https://github.com/artemv01/ngx-admin/issues/new).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## License
+
+Feel free to use my code on your project. It would be great if you put a reference to this repository.
+
+[MIT](https://opensource.org/licenses/MIT)
+
+[material]: https://material.angular.io/
+[angular]: https://angular.io/
+[ngx-storefront]: https://github.com/artemv01/ngx-storefront
+[ngx-storefront-api]: https://github.com/artemv01/ngx-storefront-api
+[ngx-admin]: https://github.com/artemv01/ngx-admin
