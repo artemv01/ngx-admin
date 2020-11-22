@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
@@ -8,7 +8,6 @@ import { HTTP_ERROR_HANDLER } from 'src/app/shared/helpers/handle-error';
 import { ItemService } from 'src/app/shared/models/item-service';
 import { environment } from 'src/environments/environment';
 import { Product } from '../models/product';
-import { Category } from '../../category/models/category';
 import { StorageService } from '@app/shared/services/storage.service';
 import { ItemType } from '../models/item-type';
 import { LoadingService } from '@app/shared/services/loading.service';

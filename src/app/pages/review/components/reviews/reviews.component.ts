@@ -1,6 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  Attribute,
   Component,
   ElementRef,
   OnInit,

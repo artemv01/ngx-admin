@@ -1,6 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  Attribute,
   Component,
   ElementRef,
   OnInit,
@@ -22,7 +21,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { Order } from '../../models/order';
-import { OrderStatus, OrderStatuses } from '../../models/order-status';
+import { OrderStatuses } from '../../models/order-status';
 import { OrderService } from '../../services/order.service';
 
 @Component({

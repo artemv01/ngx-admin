@@ -1,10 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  Attribute,
   Component,
   ElementRef,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
@@ -14,7 +12,7 @@ import { MatTable } from '@angular/material/table';
 import { ItemsQuery } from '@app/shared/models/items-query';
 import { ItemsDataSource } from '@app/shared/datasources/items.datasource';
 import { NotificationService } from '@app/shared/services/notification.service';
-import { fromEvent, merge, Observable, Subject } from 'rxjs';
+import { fromEvent, merge, Subject } from 'rxjs';
 import {
   takeUntil,
   debounceTime,
@@ -22,8 +20,6 @@ import {
   tap,
 } from 'rxjs/operators';
 import { BulkAction } from 'src/app/shared/models/bulk-action';
-import { FilterQuery } from 'src/app/shared/models/filter-query';
-import { PaginationQuery } from 'src/app/shared/models/pagination-query';
 import { environment } from 'src/environments/environment';
 import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products.service';

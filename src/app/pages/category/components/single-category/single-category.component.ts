@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable, of, Subject } from 'rxjs';
 import { first, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { AlertService } from 'src/app/shared/services/alert.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Category } from '../../models/category';

@@ -6,10 +6,9 @@ import { HTTP_ERROR_HANDLER } from '@app/shared/helpers/handle-error';
 import { ItemService } from '@app/shared/models/item-service';
 import { environment } from '@root/environments/environment';
 import { Observable } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { ChangeStatusRQ } from '../models/change-status-rq';
 import { Order } from '../models/order';
-import { OrderStatus } from '../models/order-status';
 import { LoadingService } from '@app/shared/services/loading.service';
 
 @Injectable({

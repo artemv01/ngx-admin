@@ -1,14 +1,11 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import {
   trigger,
   transition,
   style,
   animate,
-  state,
 } from '@angular/animations';
-import { Notification } from '../../models/notification';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({

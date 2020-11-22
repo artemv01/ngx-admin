@@ -1,15 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
-  Validators,
 } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Location } from '@angular/common';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BulkAction } from '@app/shared/models/bulk-action';
 import { LoadingService } from '@app/shared/services/loading.service';
 import { NotificationService } from '@app/shared/services/notification.service';
@@ -17,8 +15,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Address } from '../../models/address';
 import { CartItem } from '../../models/cart-item';
-import { Order } from '../../models/order';
-import { OrderStatus } from '../../models/order-status';
 import { OrderService } from '../../services/order.service';
 
 @Component({

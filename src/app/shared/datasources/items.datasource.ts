@@ -1,6 +1,6 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { delay, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { ItemService } from '../models/item-service';
 import { ItemsQuery } from '../models/items-query';
 import { ItemsResp } from '../models/items-resp';

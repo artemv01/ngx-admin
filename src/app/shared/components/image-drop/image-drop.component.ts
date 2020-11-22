@@ -1,13 +1,10 @@
 import {
   AfterViewInit,
   ElementRef,
-  EventEmitter,
   Input,
-  Output,
 } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-image-drop',

@@ -1,19 +1,13 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';

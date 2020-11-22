@@ -1,9 +1,5 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { FormBuilder, FormControl, NgModel, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { filter, map, startWith, tap } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { LastRouteService } from './shared/services/last-route.service';
 import { LoadingService } from './shared/services/loading.service';

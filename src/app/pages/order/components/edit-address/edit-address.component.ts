@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from '@app/shared/services/loading.service';
 import { NotificationService } from '@app/shared/services/notification.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
 

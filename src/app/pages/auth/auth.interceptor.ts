@@ -4,7 +4,6 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpParams,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { exhaustMap, take } from 'rxjs/operators';

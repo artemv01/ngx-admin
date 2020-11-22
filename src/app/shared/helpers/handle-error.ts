@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { AlertService } from '../services/alert.service';
 
 export const HTTP_ERROR_HANDLER = new InjectionToken<() => void>('');

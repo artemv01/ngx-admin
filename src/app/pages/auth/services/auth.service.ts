@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, map, switchMap } from 'rxjs/operators';
-import { throwError, BehaviorSubject, of, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError, BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserAuth } from '../models/user-auth';
 import { environment as env } from 'src/environments/environment';

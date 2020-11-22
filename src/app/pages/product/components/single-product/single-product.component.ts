@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,15 +12,13 @@ import {
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
 import {
-  filter,
   first,
   map,
   mergeMap,
   startWith,
-  take,
   takeUntil,
   withLatestFrom,
 } from 'rxjs/operators';

@@ -94,6 +94,12 @@
           "configurations": {
             "production": {
               "browserTarget": "ngx-storefront-admin:build:production"
+            },
+            "staging": {
+              "browserTarget": "ngx-storefront-admin:build:starging",
+              "optimization": false,
+              "sourceMap": false,
+              "vendorChunk": false
             }
           }
         },

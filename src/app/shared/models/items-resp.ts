@@ -1,4 +1,4 @@
-import { Product } from 'src/app/pages/product/models/product';
+
 
 export interface ItemsResp<T> {
   items: T[];

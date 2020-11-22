@@ -5,18 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { StorageService } from '@app/shared/services/storage.service';
-import { Observable, of } from 'rxjs';
-import {
-  tap,
-  map,
-  filter,
-  first,
-  mergeMap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Product } from '../models/product';
-import { ItemType } from '../models/item-type';
-import { ProductsService } from './products.service';
 import { Category } from '@app/pages/category/models/category';
 import { CategoryService } from '@app/pages/category/services/category.service';
 import { ItemsResp } from '@app/shared/models/items-resp';
