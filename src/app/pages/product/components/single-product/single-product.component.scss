@@ -1,46 +1,39 @@
 @import '/src/styles/support';
+@import '/src/styles/colors';
 mat-card {
-    max-width: 930px;
+  max-width: 930px;
 }
 .product-form {
-    display: flex;
-    flex-flow: column;
+  display: flex;
+  flex-flow: column;
 }
 .prices-wrap {
-    display: flex;
-    flex-flow: column;
-    @include media-md {
-        flex-flow: row;
-        mat-form-field {
-            flex: 1 1 100%;
-        }
-        mat-form-field:first-child {
-            margin-right: 1rem;
-        }
+  display: flex;
+  flex-flow: column;
+  @include media-md {
+    flex-flow: row;
+    mat-form-field {
+      flex: 1 1 100%;
     }
+    mat-form-field:first-child {
+      margin-right: 1rem;
+    }
+  }
 }
 .onsale-toggle {
-    padding-bottom: 1.34375em;
-    user-select: none;
+  padding-bottom: 1.34375em;
+  user-select: none;
 }
 
 .image-upload-wrap {
-    margin: 2rem 0;
+  margin: 2rem 0;
 }
-/* 
-app-layout {
-    mat-card.content {
-        display: block;
-    }
-    mat-card.load-indicator {
-        display: none;
-    }
+.tags-wrap {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  mat-form-field {
+    flex: auto;
+  }
+  
 }
-app-layout.loading {
-    mat-card.content {
-        display: none;
-    }
-    mat-card.load-indicator {
-        display: block;
-    }
-} */

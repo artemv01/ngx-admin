@@ -1,160 +1,173 @@
 <app-layout>
-    <mat-toolbar class="page-header">
-        <h1>{{productId ? 'Edit' : 'Add'}} Product</h1>
-    </mat-toolbar>
-    <mat-card [hidden]="!(loading.display$ | async)"
-        class="load-indicator mat-elevation-z3">
-        <div class="skel-load"
-            style="height:24px; margin-bottom: 1.5rem">
-        </div>
-        <div class="skel-load"
-            style="height:14px; margin-bottom: .25rem;width: 60%">
-        </div>
-        <div class="skel-load"
-            style="height:24px; margin-bottom: 1rem">
-        </div>
-        <div class="skel-load"
-            style="height:14px; margin-bottom: .25rem;width: 60%">
-        </div>
-        <div class="skel-load"
-            style="height:150px; margin-bottom: 1rem;">
-        </div>
-        <div style="display: flex;flex-flow:row nowrap; margin-bottom: 1rem;">
-            <div class="skel-load"
-                style="height:24px;  flex: 1 1 auto; margin-right: .5rem">
-            </div>
-            <div class="skel-load"
-                style="height:24px;  flex: 1 1 auto; margin-left: .5rem">
-            </div>
-        </div>
-        <div class="skel-load"
-            style="height:14px; margin-bottom: .25rem;width: 60%">
-        </div>
-        <div class="skel-load"
-            style="height:200px; margin-bottom: 1rem; width: 100%;">
-        </div>
-        <div class="skel-load"
-            style="height:14px; margin-bottom: .25rem;width: 60%">
-        </div>
-        <div class="skel-load"
-            style="height:24px; margin-bottom: 1rem">
-        </div>
-    </mat-card>
-    <mat-card [hidden]="(loading.display$ | async)"
-        class="content mat-elevation-z3">
-        <mat-card-title *ngIf="productName">
-            <h4>
-                {{productName}}
-            </h4>
-        </mat-card-title>
-        <form class="product-form"
-            (submit)="productId ? editProduct() : addProduct()"
-            [formGroup]="productForm">
-            <mat-form-field>
-                <mat-label>Product name</mat-label>
+  <mat-toolbar class="page-header">
+    <h1>{{productId ? 'Edit' : 'Add'}} Product</h1>
+  </mat-toolbar>
+  <mat-card [hidden]="!(loading.display$ | async)"
+    class="load-indicator mat-elevation-z3">
+    <div class="skel-load"
+      style="height:24px; margin-bottom: 1.5rem">
+    </div>
+    <div class="skel-load"
+      style="height:14px; margin-bottom: .25rem;width: 60%">
+    </div>
+    <div class="skel-load"
+      style="height:24px; margin-bottom: 1rem">
+    </div>
+    <div class="skel-load"
+      style="height:14px; margin-bottom: .25rem;width: 60%">
+    </div>
+    <div class="skel-load"
+      style="height:150px; margin-bottom: 1rem;">
+    </div>
+    <div style="display: flex;flex-flow:row nowrap; margin-bottom: 1rem;">
+      <div class="skel-load"
+        style="height:24px;  flex: 1 1 auto; margin-right: .5rem">
+      </div>
+      <div class="skel-load"
+        style="height:24px;  flex: 1 1 auto; margin-left: .5rem">
+      </div>
+    </div>
+    <div class="skel-load"
+      style="height:14px; margin-bottom: .25rem;width: 60%">
+    </div>
+    <div class="skel-load"
+      style="height:200px; margin-bottom: 1rem; width: 100%;">
+    </div>
+    <div class="skel-load"
+      style="height:14px; margin-bottom: .25rem;width: 60%">
+    </div>
+    <div class="skel-load"
+      style="height:24px; margin-bottom: 1rem">
+    </div>
+  </mat-card>
+  <mat-card [hidden]="(loading.display$ | async)"
+    class="content mat-elevation-z3">
+    <mat-card-title *ngIf="productName">
+      <h4>
+        {{productName}}
+      </h4>
+    </mat-card-title>
+    <form class="product-form"
+      (submit)="productId ? editProduct() : addProduct()"
+      [formGroup]="productForm">
+      <mat-form-field>
+        <mat-label>Product name</mat-label>
 
-                <input required
-                    formControlName="name"
-                    matInput
-                    placeholder="Product name">
-                <mat-error *ngIf="name.hasError('required')">Product name is required.</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Product description</mat-label>
-                <textarea requried
-                    formControlName="description"
-                    rows="10"
-                    matInput
-                    placeholder="Product description"></textarea>
+        <input required
+          formControlName="name"
+          matInput
+          placeholder="Product name">
+        <mat-error *ngIf="name.hasError('required')">Product name is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Product description</mat-label>
+        <textarea requried
+          formControlName="description"
+          rows="10"
+          matInput
+          placeholder="Product description"></textarea>
 
-            </mat-form-field>
-            <mat-slide-toggle class="onsale-toggle"
-                formControlName="onSale">
-                <span class="text-note">On sale</span>
-            </mat-slide-toggle>
-            <div class="prices-wrap">
-                <mat-form-field>
-                    <mat-label>Price</mat-label>
+      </mat-form-field>
+      <mat-slide-toggle class="onsale-toggle"
+        formControlName="onSale">
+        <span class="text-note">On sale</span>
+      </mat-slide-toggle>
+      <div class="prices-wrap">
+        <mat-form-field>
+          <mat-label>Price</mat-label>
 
-                    <input required
-                        currencyMask
-                        formControlName="price"
-                        matInput
-                        [options]="priceInputOptions">
-                    <!-- <span matSuffix>$&nbsp;</span> -->
-                    <mat-error *ngIf="price.hasError('required')">Product price name is required.
-                    </mat-error>
+          <input required
+            currencyMask
+            formControlName="price"
+            matInput
+            [options]="priceInputOptions">
+          <!-- <span matSuffix>$&nbsp;</span> -->
+          <mat-error *ngIf="price.hasError('required')">Product price name is required.
+          </mat-error>
 
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Sale price</mat-label>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sale price</mat-label>
 
-                    <input matInput
-                        currencyMask
-                        [options]="priceInputOptions"
-                        formControlName="salePrice"
-                        placeholder="Sale price">
-                    <mat-error *ngIf="salePrice.hasError('salePriceRequired')">Sale price is
-                        required
-                        when On Sale switch is ON.</mat-error>
-                    <mat-error *ngIf="salePrice.hasError('pattern')">Sale price can only be a
-                        number.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="image-upload-wrap">
-                <app-image-drop [imageControl]="image"
-                    [initSrc]="initImageSrc"></app-image-drop>
-                <mat-error *ngIf="image.hasError('required')">Product image is required.
-                </mat-error>
-            </div>
-            <mat-form-field>
-                <mat-chip-list #productTags
-                    aria-label="Select product tags">
-                    <ng-container *ngFor="let cat of addedCategories; let i= index;">
-                        <mat-chip *ngIf="!cat.toDelete"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeCategory(i)">
-                            {{cat.name}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                    </ng-container>
-                    <input placeholder="New category..."
-                        [formControl]="catsInput"
-                        name="catInput"
-                        [matAutocomplete]="catAutocomplete"
-                        [matChipInputFor]="productTags"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="createCategory($event)">
-                </mat-chip-list>
-                <mat-autocomplete #catAutocomplete="matAutocomplete"
-                    autoActiveFirstOption
-                    (optionSelected)="addCategoryToProduct($event)">
-                    <mat-option *ngFor="let cat of filterCats$ | async"
-                        [value]="cat._id">
-                        {{cat.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-            <div class="bottom-buttons">
-                <button mat-flat-button
-                    (click)="back()"
-                    class="icon-button"
-                    color="accent"
-                    type="button">
-                    <mat-icon>arrow_back</mat-icon>
-                    Back
-                </button>
-                <button mat-flat-button
-                    class="icon-button"
-                    [disabled]="productForm.invalid"
-                    color="primary"
-                    type="submit">
-                    <mat-icon>{{productId ? 'edit' : 'save'}}</mat-icon>
-                    {{productId ? 'Edit' : 'Add'}}
-                </button>
-            </div>
-        </form>
-    </mat-card>
+          <input matInput
+            currencyMask
+            [options]="priceInputOptions"
+            formControlName="salePrice"
+            placeholder="Sale price">
+          <mat-error *ngIf="salePrice.hasError('salePriceRequired')">Sale price is
+            required
+            when On Sale switch is ON.</mat-error>
+          <mat-error *ngIf="salePrice.hasError('pattern')">Sale price can only be a
+            number.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="image-upload-wrap">
+        <app-image-drop [imageControl]="image"
+          [initSrc]="initImageSrc"></app-image-drop>
+        <mat-error *ngIf="image.hasError('required')">Product image is required.
+        </mat-error>
+      </div>
+      <div class="tags-wrap">
+        <mat-form-field>
+          <mat-chip-list #productTags
+            aria-label="Select product tags">
+            <ng-container *ngFor="let cat of addedCategories; let i= index;">
+              <mat-chip *ngIf="!cat.toDelete"
+                [selectable]="true"
+                [removable]="true"
+                (removed)="removeCategory(i)">
+                {{cat.name}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </ng-container>
+            <input placeholder="New category..."
+              [formControl]="catsInput"
+              name="catInput"
+              [matAutocomplete]="catAutocomplete"
+              [matChipInputFor]="productTags"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              #catInput
+              (matChipInputTokenEnd)="createCategory($event)">
+          </mat-chip-list>
+          <mat-autocomplete #catAutocomplete="matAutocomplete"
+            autoActiveFirstOption
+            (optionSelected)="addCategoryToProduct($event)">
+            <mat-option *ngFor="let cat of filterCats$ | async"
+              [value]="cat._id">
+              {{cat.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div>
+          <button mat-button
+            (click)="createCategory({value: catInput.value, input: catInput})"
+            type="button"
+            class="with-icon"
+            color="primary"
+            aria-label="Add category">
+            <mat-icon>add</mat-icon> Add
+          </button>
+        </div>
+      </div>
+      <div class="bottom-buttons">
+        <button mat-flat-button
+          (click)="back()"
+          class="icon-button"
+          color="accent"
+          type="button">
+          <mat-icon>arrow_back</mat-icon>
+          Back
+        </button>
+        <button mat-flat-button
+          class="icon-button"
+          [disabled]="productForm.invalid"
+          color="primary"
+          type="submit">
+          <mat-icon>{{productId ? 'edit' : 'save'}}</mat-icon>
+          {{productId ? 'Edit' : 'Add'}}
+        </button>
+      </div>
+    </form>
+  </mat-card>
 </app-layout>
