@@ -4,7 +4,7 @@
             <h1>Edit address</h1>
         </mat-toolbar>
         <mat-card class="mat-elevation-z3"
-            *ngIf="loading.display$ | async">
+            *ngIf="(loading.display$ | async)">
             <mat-card-title>
                 <h4>
                     Edit {{type === 'shipping' ? 'shipping' : 'billing'}} address

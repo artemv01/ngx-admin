@@ -1,17 +1,13 @@
-@import 'styles/colors';
+/* @import 'styles/colors';
 
 @import '~@angular/material/theming';
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat-core();
 
 // The warn palette is optional (defaults to red).
-$ngx-admin-warn: mat-palette($mat-red);
+$c-warn: mat-palette($mat-red);
 
-$ngx-admin-accent: (
+$c-accent: (
     50: $c-accent,
     100: $c-accent,
     200: $c-accent,
@@ -44,7 +40,7 @@ $ngx-admin-accent: (
     ),
 );
 
-$ngx-admin-primary: (
+$c-primary: (
     50: $c-primary,
     100: $c-primary,
     200: $c-primary,
@@ -77,11 +73,95 @@ $ngx-admin-primary: (
     ),
 );
 
-$ngx-admin-primary: mat-palette($ngx-admin-primary);
-$ngx-admin-accent: mat-palette($ngx-admin-accent);
-$ngx-admin-warn: mat-palette($mat-red);
-$ngx-admin-theme: mat-light-theme($ngx-admin-primary, $ngx-admin-accent, $ngx-admin-warn);
-@include angular-material-theme($ngx-admin-theme);
+$c-primary: mat-palette($c-primary);
+$c-accent: mat-palette($c-accent);
+$c-warn: mat-palette($mat-red);
+$c-theme: mat-light-theme($c-primary, $c-accent, $c-warn);
+@include angular-material-theme($c-theme); */
+@import 'styles/colors';
+@import '~@angular/material/theming';
+@import 'app/shared/components/nav-item/nav-item.component.scss-theme.scss';
+@import '/src/styles/skeleton-load.scss';
+@include mat-core();
+
+$c-primary: mat-palette($mat-indigo);
+$c-accent: mat-palette($mat-pink, A200, A100, A400);
+$c-warn: mat-palette($mat-red);
+$c-primary-dark: mat-palette($mat-purple, 700, 500, 800);
+$c-accent-dark: mat-palette($mat-green, A200, A100, A400);
+$c-warn-dark: mat-palette($mat-red);
+
+$theme: mat-light-theme($c-primary, $c-accent, $c-warn);
+$theme-dark: mat-dark-theme($c-primary-dark, $c-accent-dark, $c-warn-dark);
+
+$c-head: #a8a8a8;
+
+@mixin define-colors() {
+}
+
+.theme-light {
+    @include angular-material-theme($theme);
+    @include nav-item-component-theme($theme);
+
+    $foreground: map-get($theme, foreground);
+    $config: mat-get-color-config($theme);
+    $primary: map-get($config, primary);
+    $accent: map-get($config, accent);
+
+    a {
+        color: mat-color($accent, 600);
+        &:hover {
+            color: mat-color($accent, 900);
+        }
+    }
+
+    button.mat-mini-fab[mat-mini-fab] {
+        // color: mat-color($foreground, base);
+        box-shadow: none;
+    }
+    mat-toolbar.mat-toolbar {
+        background-color: transparent;
+    }
+    .dark-mode-icon {
+        color: mat-color($foreground, base);
+    }
+    .skel-load {
+        @include skeleton-loader(linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent), #ddd);
+    }
+    mat-cell.mat-cell {
+        color: mat-color($foreground, text);
+    }
+}
+
+.theme-dark {
+    @include angular-material-theme($theme-dark);
+    @include nav-item-component-theme($theme-dark);
+
+    $foreground: map-get($theme-dark, foreground);
+    $config: mat-get-color-config($theme-dark);
+    $primary: map-get($config, primary);
+    $accent: map-get($config, accent);
+
+    a {
+        color: mat-color($accent);
+        &:hover {
+            color: mat-color($accent);
+        }
+    }
+    button.mat-mini-fab[mat-mini-fab] {
+        // color: mat-color($foreground, base);
+        box-shadow: none;
+    }
+    mat-toolbar.mat-toolbar {
+        background-color: transparent;
+    }
+    .dark-mode-icon {
+        color: mat-color(map-get($theme-dark, accent));
+    }
+    .skel-load {
+        @include skeleton-loader(linear-gradient(90deg, transparent, rgba(90, 90, 90, 0.4), transparent), #333);
+    }
+}
 
 .mat-display-1 {
     color: $c-head;
@@ -127,10 +207,8 @@ mat-toolbar.page-header {
 button.mat-mini-fab[mat-mini-fab] {
     background-color: transparent !important;
     box-shadow: none;
-    color: $c-top-header-icon;
 }
 button.mat-mini-fab.view-item-btn {
-    color: #ccc;
     display: inline-block;
     margin: 0 16px;
 }

@@ -23,6 +23,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { RateItemComponent } from './components/rate-item/rate-item.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -52,6 +53,7 @@ import { RateItemComponent } from './components/rate-item/rate-item.component';
     MatButtonModule,
     MatCardModule,
     MatRippleModule,
+    MatSlideToggleModule,
   ],
   exports: [
     LayoutComponent,

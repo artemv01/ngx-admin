@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { AuthService } from '@app/pages/auth/services/auth.service';
+import { ThemeService } from '@app/shared/services/theme.service';
 import { routes } from '../nav-item/routes';
 
 @Component({
@@ -17,7 +18,8 @@ export class LayoutComponent implements OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    public authService: AuthService
+    public authService: AuthService,
+    public themeService: ThemeService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
 
@@ -32,5 +34,9 @@ export class LayoutComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  onToggleTheme() {
+    this.themeService.toggleTheme();
   }
 }

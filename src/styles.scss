@@ -2,97 +2,97 @@
 @import '~normalize.css';
 @import 'styles/skeleton-load';
 [hidden] {
-    display: none !important;
+  display: none !important;
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 body {
-    margin: 0;
+  margin: 0;
 }
 .page-wrapper {
-    width: 100%;
-    max-width: 62rem;
-    margin: 60px 32px;
+  width: 100%;
+  max-width: 62rem;
+  margin: 60px 32px;
 }
 
 .spinner-container {
-    background: white;
-    padding: 64px 0;
-    display: flex;
-    justify-content: center;
+  background: transparent;
+  padding: 64px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .table-container {
-    mat-table {
-        min-width: 1200px;
-    }
-    max-width: 100%;
-    overflow-x: auto;
+  mat-table {
+    min-width: 1200px;
+  }
+  max-width: 100%;
+  overflow-x: auto;
 }
 .table-container td,
 .table-container th {
-    border: 0;
+  border: 0;
 }
 
 .bottom-buttons {
-    margin-top: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  button {
+    max-width: 10rem;
     width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    button {
-        max-width: 10rem;
-        width: 100%;
-    }
-    button:first-child {
-        margin-right: 1.25rem;
-    }
+  }
+  button:first-child {
+    margin-right: 1.25rem;
+  }
 }
 
 .icon-button {
-    .mat-button-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    mat-icon {
-        margin-right: 0.25rem;
-    }
+  .mat-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  mat-icon {
+    margin-right: 0.25rem;
+  }
 }
 .text-note {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 .empty-table-message {
-    width: 100%;
-    text-align: center;
-    font-weight: 500;
-    font-size: 1.2rem;
-    padding: 2rem 0;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 2rem 0;
 }
 
 .items-actions {
-    margin: 0rem 0 1rem 0;
+  margin: 0rem 0 1rem 0;
 }
 
 .search-container,
 .bulk-select {
-    width: 100%;
-    max-width: 300px;
+  width: 100%;
+  max-width: 300px;
 }
 .bulk-select {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 .one-line {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 mat-paginator.mat-paginator {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }

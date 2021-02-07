@@ -5,7 +5,8 @@
     <mat-card class="mat-elevation-z3">
         <mat-card-title>
             <h4>
-                {{itemsQuery.search ? 'Reviews for query "' + itemsQuery.search + '"' : 'All Reviews'}}
+                {{itemsQuery.search ? 'Reviews for query "' + itemsQuery.search + '"' : 'All
+                Reviews'}}
             </h4>
         </mat-card-title>
         <mat-form-field class="bulk-select">
@@ -60,7 +61,7 @@
                             *matHeaderCellDef>
                             <button mat-mini-fab
                                 class="view-item-btn">
-                                <mat-icon>visibility</mat-icon>
+                                <mat-icon color="accent">visibility</mat-icon>
                             </button>
                         </th>
                         <td mat-cell
@@ -68,7 +69,7 @@
                             <button mat-mini-fab
                                 class="view-item-btn"
                                 [routerLink]="['/dashboard','reviews', 'edit', item._id]">
-                                <mat-icon>visibility</mat-icon>
+                                <mat-icon color="accent">visibility</mat-icon>
                             </button>
                         </td>
                     </ng-container>

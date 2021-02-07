@@ -1,50 +1,59 @@
 @import 'variables';
 
 @mixin md-icon-size($size: 24px) {
-    font-size: $size;
-    height: $size;
-    width: $size;
-    line-height: $size;
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
 }
 
 @mixin media-sm {
-    @media (min-width: $sm) {
-        @content;
-    }
+  @media (min-width: $sm) {
+    @content;
+  }
 }
 @mixin media-md {
-    @media (min-width: $md) {
-        @content;
-    }
+  @media (min-width: $md) {
+    @content;
+  }
 }
 @mixin media-lg {
-    @media (min-width: $lg) {
-        @content;
-    }
+  @media (min-width: $lg) {
+    @content;
+  }
 }
 @mixin media-xl {
-    @media (min-width: $xl) {
-        @content;
-    }
+  @media (min-width: $xl) {
+    @content;
+  }
 }
 
 @mixin media-max-sm {
-    @media (max-width: $max-sm) {
-        @content;
-    }
+  @media (max-width: $max-sm) {
+    @content;
+  }
 }
 @mixin media-max-md {
-    @media (max-width: $max-md) {
-        @content;
-    }
+  @media (max-width: $max-md) {
+    @content;
+  }
 }
 @mixin media-max-lg {
-    @media (max-width: $max-lg) {
-        @content;
-    }
+  @media (max-width: $max-lg) {
+    @content;
+  }
 }
 @mixin media-max-xl {
-    @media (max-width: $max-xl) {
-        @content;
-    }
+  @media (max-width: $max-xl) {
+    @content;
+  }
+}
+
+@mixin noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
