@@ -19,11 +19,13 @@ export class ThemeService {
       this.renderer.addClass(document.body, 'theme-light');
       this.isDarkTheme = false;
       this.isDarkTheme$.next(false);
+      localStorage.setItem('ngx-admin-dark', 'false');
     } else {
       this.renderer.addClass(document.body, 'theme-dark');
       this.renderer.removeClass(document.body, 'theme-light');
       this.isDarkTheme = true;
       this.isDarkTheme$.next(true);
+      localStorage.setItem('ngx-admin-dark', 'true');
     }
   }
 }
