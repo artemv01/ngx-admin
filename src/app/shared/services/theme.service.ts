@@ -1,10 +1,12 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
   private isDarkTheme: boolean;
+  public isDarkTheme$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private renderer: Renderer2;
 
   constructor(rendererFactory: RendererFactory2) {
@@ -16,10 +18,12 @@ export class ThemeService {
       this.renderer.removeClass(document.body, 'theme-dark');
       this.renderer.addClass(document.body, 'theme-light');
       this.isDarkTheme = false;
+      this.isDarkTheme$.next(false);
     } else {
       this.renderer.addClass(document.body, 'theme-dark');
       this.renderer.removeClass(document.body, 'theme-light');
       this.isDarkTheme = true;
+      this.isDarkTheme$.next(true);
     }
   }
 }

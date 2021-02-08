@@ -21,4 +21,9 @@ export const routes: NavItem[] = [
     icon: 'label',
     name: 'Categories',
   },
+  {
+    path: '/dashboard/reports',
+    icon: 'insights',
+    name: 'Reports',
+  },
 ];

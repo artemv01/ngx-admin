@@ -29,7 +29,6 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { Category } from '../../../category/models/category';
 import { ProductsService } from '../../services/products.service';
 import { CategoryService } from 'src/app/pages/category/services/category.service';
-import { LastRouteService } from '@app/shared/services/last-route.service';
 import { StorageService } from '@app/shared/services/storage.service';
 import { ItemType } from '../../models/item-type';
 import { Product } from '../../models/product';
@@ -64,8 +63,6 @@ export const salePriceRequired: ValidatorFn = (
 })
 export class SingleProductComponent implements OnInit, AfterViewInit {
   savedStatus = '';
-
-  previousUrl = '';
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -115,7 +112,6 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
     public loading: LoadingService,
     public categoryService: CategoryService,
     public notification: NotificationService,
-    private lastUrl: LastRouteService,
     private store: StorageService<Product>
   ) {
     this.filterCats$ = this.catsInput.valueChanges.pipe(
@@ -150,10 +146,6 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.lastUrl.url$
-      .pipe(takeUntil(this.destroy))
-      .subscribe((url) => (this.previousUrl = url));
-
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.savedStatus = params['status'];
     });
@@ -233,6 +225,7 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
           status: 'success',
         },
         queryParamsHandling: 'merge',
+        skipLocationChange: true,
       });
     });
   }
@@ -276,36 +269,8 @@ export class SingleProductComponent implements OnInit, AfterViewInit {
   }
 
   back() {
-    if (/products\/add/.test(this.previousUrl)) {
-      this.router.navigate(['/dashboard', 'products']);
-    } else {
-      this.location.back();
-    }
+    this.location.back();
   }
-
-  /* private _getProduct() {
-    this.loading.show();
-    forkJoin([
-      this.productService.getOne(this.productId),
-      this.categoryService.getAll(),
-    ]).subscribe(
-      ([product, categoryList]) => {
-        const { categories, image, ...productData } = product;
-        this.productForm.patchValue(productData);
-        if (image) {
-          // this.initImageSrc$.next(image);
-          this.initImageSrc = image;
-        }
-        this.addedCategories = categories;
-        this.productForm.updateValueAndValidity();
-        this.allCategories = categoryList.items;
-        this.loading.hide();
-      },
-      () => {
-        this.loading.hide();
-      }
-    );
-  } */
 
   private _filter(value: string): Category[] {
     const filterValue = value.toLowerCase();

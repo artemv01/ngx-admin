@@ -12,6 +12,9 @@ body {
 body {
   margin: 0;
 }
+* {
+  transition: background 0.1s ease;
+}
 .page-wrapper {
   width: 100%;
   max-width: 62rem;

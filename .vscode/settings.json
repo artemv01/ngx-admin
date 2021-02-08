@@ -1,7 +1,7 @@
 
 {
     "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features",
+        "editor.defaultFormatter": "HookyQR.beautify",
         "editor.tabSize": 4,
         "editor.formatOnSave": true,
 

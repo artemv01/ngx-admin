@@ -7,33 +7,39 @@ const routes: Routes = [
 
   {
     path: '',
-    canActivate: [],
+    canLoad: [],
     loadChildren: () =>
       import('./pages/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'dashboard/products',
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () =>
       import('./pages/product/product.module').then((m) => m.ProductModule),
   },
   {
     path: 'dashboard/categories',
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () =>
       import('./pages/category/category.module').then((m) => m.CategoryModule),
   },
   {
     path: 'dashboard/orders',
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () =>
       import('./pages/order/order.module').then((m) => m.OrderModule),
   },
   {
     path: 'dashboard/reviews',
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () =>
       import('./pages/review/review.module').then((m) => m.ReviewModule),
+  },
+  {
+    path: 'dashboard/reports',
+    canLoad: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/reports/reports.module').then((m) => m.ReportsModule),
   },
 ];
 
