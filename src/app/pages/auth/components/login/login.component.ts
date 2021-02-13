@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  private fillEmail: string = environment.staging ? 'test@example.com' : '';
+  private fillEmail: string = environment.staging ? 'example@example.com' : '';
   private fillPassword: string = environment.staging ? 'password12' : '';
 
   loading = false;
