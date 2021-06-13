@@ -1,241 +1,156 @@
 <app-layout>
-  <mat-toolbar class="page-header">
-    <h1>Products</h1>
-  </mat-toolbar>
-  <mat-card class="mat-elevation-z3">
-    <mat-card-title>
-      <h4>
-        {{itemsQuery.search ? 'Products for query "' + itemsQuery.search + '"' : 'All Products'}}
-      </h4>
-    </mat-card-title>
-    <div class="items-actions">
-      <button [routerLink]="['/dashboard', 'products', 'add']"
-        mat-flat-button
-        class="icon-button"
-        color="primary"
-        type="submit">
-        <mat-icon>add</mat-icon>Add New
-      </button>
-    </div>
-    <mat-form-field class="bulk-select">
-      <mat-label>Bulk actions</mat-label>
-      <mat-select #selAction="ngModel"
-        ngModel
-        name="selAction">
-        <mat-option *ngFor="let action of bulkActions"
-          [value]="action.value">
-          {{action.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="search-container">
-      <input matInput
-        placeholder="Search products"
-        name="search"
-        #search>
-    </mat-form-field>
-    <!-- "dataSource.totalItems || (dataSource.loading$ | async)" -->
-    <div class="spinner-container"
-      *ngIf="dataSource.loading$ | async">
-      <mat-spinner></mat-spinner>
-    </div>
-    <div class="empty-table-message"
-      *ngIf="!dataSource.totalItems && !(dataSource.loading$ | async)">No items found.</div>
-    <div [hidden]="!dataSource.totalItems || (dataSource.loading$ | async)">
-      <form class="table-container">
-        <!--    <mat-table class="products-table mat-elevation-z8"
-                    [dataSource]="mock">
+    <mat-toolbar class="page-header">
+        <h1>Products</h1>
+    </mat-toolbar>
+    <mat-card class="mat-elevation-z3">
+        <mat-card-title>
+            <h4>
+                {{itemsQuery.search ? 'Products for query "' + itemsQuery.search + '"' : 'All Products'}}
+            </h4>
+        </mat-card-title>
+        <div class="items-actions">
+            <button [routerLink]="['/dashboard', 'products', 'add']"
+                    mat-flat-button
+                    class="icon-button"
+                    color="primary"
+                    type="submit">
+                <mat-icon>add</mat-icon>Add New
+            </button>
+        </div>
+        <mat-form-field class="bulk-select">
+            <mat-label>Bulk actions</mat-label>
+            <mat-select #selAction="ngModel"
+                        ngModel
+                        name="selAction">
+                <mat-option *ngFor="let action of bulkActions"
+                            [value]="action.value">
+                    {{action.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="search-container">
+            <input matInput
+                   placeholder="Search products"
+                   name="search"
+                   #search>
+        </mat-form-field>
+        <!-- "dataSource.totalItems || (dataSource.loading$ | async)" -->
+        <div class="spinner-container"
+             *ngIf="dataSource.loading$ | async">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div class="empty-table-message"
+             *ngIf="!dataSource.totalItems && !(dataSource.loading$ | async)">No items found.</div>
+        <div [hidden]="!dataSource.totalItems || (dataSource.loading$ | async)">
+            <form class="table-container">
+                <mat-table class="products-table mat-elevation-z8"
+                           [dataSource]="dataSource"
+                           #itemsTable
+                           matSort
+                           matSortActive="createdAt"
+                           matSortDirection="asc"
+                           matSortDisableClear>
 
                     <ng-container matColumnDef="select">
                         <th mat-header-cell
                             *matHeaderCellDef>
-                            <mat-checkbox [disabled]>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                          [checked]="selection.hasValue() && isAllSelected()"
+                                          [indeterminate]="selection.hasValue() && !isAllSelected()">
                             </mat-checkbox>
                         </th>
                         <td mat-cell
                             *matCellDef="let row">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                          (change)="$event ? selection.toggle(row) : null"
+                                          [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="view">
                         <th mat-header-cell
                             *matHeaderCellDef>
                             <button mat-mini-fab
-                                class="view-product-btn">
-                                <mat-icon>visibility</mat-icon>
+                                    class="view-item-btn">
+                                <mat-icon color="accent">visibility</mat-icon>
                             </button>
                         </th>
                         <td mat-cell
                             *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
+                            <button mat-mini-fab
+                                    color="primary"
+                                    class="view-item-btn"
+                                    [routerLink]="['/dashboard','products', 'edit', product._id]">
+                                <mat-icon color="accent">visibility</mat-icon>
+                            </button>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="image">
-                        <mat-header-cell *matHeaderCellDef>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>
                             <mat-icon>insert_photo</mat-icon>
                         </mat-header-cell>
-                        <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
-                        </mat-cell>
+                        <mat-cell *matCellDef="let product"><img [src]="product.image"
+                                 alt="product image"></mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="name">
-                        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-                        <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
-                        </mat-cell>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>Name</mat-header-cell>
+                        <mat-cell *matCellDef="let product">{{product.name}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="price">
-                        <mat-header-cell *matHeaderCellDef>Price ($)</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>Price ($)</mat-header-cell>
                         <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
-                        </mat-cell>
+                            {{product.price | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="salePrice">
-                        <mat-header-cell *matHeaderCellDef>Sale Price ($)</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>Sale Price ($)</mat-header-cell>
                         <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
-                        </mat-cell>
+                            {{product.salePrice | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="onSale">
-                        <mat-header-cell *matHeaderCellDef>On Sale</mat-header-cell>
-                        <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>On Sale</mat-header-cell>
+                        <mat-cell *matCellDef="let product">{{product.onSale ? 'Yes' : 'No'}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="rating">
-                        <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>Rating</mat-header-cell>
                         <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
+                            <span *ngIf="!product.rating">-</span>
+                            <span style="display:flex;flex-flow:nowrap;align-items: center;"
+                                  *ngIf="product.rating">
+                                <app-star-rating style="padding-right: .25rem"
+                                                 [rating]="product.rating">
+                                </app-star-rating><span class="rating-count"
+                                      style="font-weight: 600;">({{product.ratingCount}})</span>
+                            </span>
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="createdAt">
-                        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef
+                                         mat-sort-header>Created</mat-header-cell>
                         <mat-cell *matCellDef="let product">
-                            <div class="skel-load" style="height:14px; margin-bottom: .25rem;w">
-                            <div>
+                            {{product.createdAt | date: 'd MMM yyyy HH:mm'}}
                         </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-                </mat-table> -->
-        <mat-table class="products-table mat-elevation-z8"
-          [dataSource]="dataSource"
-          #itemsTable
-          matSort
-          matSortActive="createdAt"
-          matSortDirection="asc"
-          matSortDisableClear>
 
-          <ng-container matColumnDef="select">
-            <th mat-header-cell
-              *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-                [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()">
-              </mat-checkbox>
-            </th>
-            <td mat-cell
-              *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)">
-              </mat-checkbox>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="view">
-            <th mat-header-cell
-              *matHeaderCellDef>
-              <button mat-mini-fab
-                class="view-item-btn">
-                <mat-icon color="accent">visibility</mat-icon>
-              </button>
-            </th>
-            <td mat-cell
-              *matCellDef="let product">
-              <button mat-mini-fab
-                color="primary"
-                class="view-item-btn"
-                [routerLink]="['/dashboard','products', 'edit', product._id]">
-                <mat-icon color="accent">visibility</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="image">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>
-              <mat-icon>insert_photo</mat-icon>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let product"><img [src]="product.image"
-                alt="product image"></mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>Name</mat-header-cell>
-            <mat-cell *matCellDef="let product">{{product.name}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>Price ($)</mat-header-cell>
-            <mat-cell *matCellDef="let product">
-              {{product.price | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="salePrice">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>Sale Price ($)</mat-header-cell>
-            <mat-cell *matCellDef="let product">
-              {{product.salePrice | currency:'USD':'':'1.2-2':'en-us'}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="onSale">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>On Sale</mat-header-cell>
-            <mat-cell *matCellDef="let product">{{product.onSale ? 'Yes' : 'No'}}
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="rating">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>Rating</mat-header-cell>
-            <mat-cell *matCellDef="let product">
-              <span *ngIf="!product.rating">-</span>
-              <span style="display:flex;flex-flow:nowrap;align-items: center;"
-                *ngIf="product.rating">
-                <app-star-rating style="padding-right: .25rem"
-                  [rating]="product.rating">
-                </app-star-rating><span class="rating-count"
-                  style="font-weight: 600;">({{product.ratingCount}})</span>
-              </span>
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="createdAt">
-            <mat-header-cell *matHeaderCellDef
-              mat-sort-header>Created</mat-header-cell>
-            <mat-cell *matCellDef="let product">
-              {{product.createdAt | date: 'd MMM yyyy HH:mm'}}
-            </mat-cell>
-          </ng-container>
+                </mat-table>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </form>
 
 
-        </mat-table>
+            <mat-paginator [length]="dataSource.totalItems"
+                           [pageSize]="itemsQuery.limit"
+                           [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+        </div>
 
-      </form>
-
-
-      <mat-paginator [length]="dataSource.totalItems"
-        [pageSize]="itemsQuery.limit"
-        [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
-    </div>
-
-  </mat-card>
+    </mat-card>
 </app-layout>

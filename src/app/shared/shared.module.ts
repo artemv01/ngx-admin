@@ -24,6 +24,8 @@ import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { RateItemComponent } from './components/rate-item/rate-item.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -54,6 +56,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatCardModule,
     MatRippleModule,
     MatSlideToggleModule,
+    MatProgressBarModule,
   ],
   exports: [
     LayoutComponent,

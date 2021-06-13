@@ -1,50 +1,48 @@
 <div class="layout"
-  [class.is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary"
-    class="top-bar">
-    <div class="main-title">
-      <button mat-mini-fab
-        aria-label="toggle sidebar"
-        (click)="sidebarOpen = sidebarOpen ? false : true">
-        <mat-icon color="accent"
-          *ngIf="sidebarOpen">menu</mat-icon>
-        <mat-icon color="accent"
-          *ngIf="!sidebarOpen">arrow_back</mat-icon>
-      </button>
-      <h1 class="app-name">Admin Panel</h1>
-    </div>
-    <div style="flex: auto">
-    </div>
-    <mat-icon (click)="onToggleTheme()"
-      class="dark-mode-icon">wb_sunny</mat-icon>
-    <!-- <mat-slide-toggle class="dark-mode-switch"
-      (change)="onToggleTheme()"
-      color="accent">
-    </mat-slide-toggle> -->
-    <button mat-mini-fab
-      aria-label="log out"
-      (click)="authService.logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
+     [class.is-mobile]="mobileQuery.matches">
+    <mat-toolbar color="primary"
+                 class="top-bar">
+        <div class="main-title">
+            <button mat-mini-fab
+                    aria-label="toggle sidebar"
+                    (click)="sidebarOpen = sidebarOpen ? false : true">
+                <mat-icon color="accent"
+                          *ngIf="sidebarOpen">menu</mat-icon>
+                <mat-icon color="accent"
+                          *ngIf="!sidebarOpen">arrow_back</mat-icon>
+            </button>
+            <h1 class="app-name">Admin Panel</h1>
+        </div>
+        <div style="flex: auto">
+        </div>
+        <mat-icon (click)="onToggleTheme()"
+                  class="dark-mode-icon">wb_sunny</mat-icon>
+        <button mat-mini-fab
+                aria-label="log out"
+                (click)="authService.logout()">
+            <mat-icon>logout</mat-icon>
+        </button>
 
-  </mat-toolbar>
-
-  <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav
-      [opened]="sidebarOpen"
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56">
-      <mat-nav-list>
-        <app-nav-item *ngFor="let navItem of routes"
-          [item]="navItem"></app-nav-item>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="sidenav-content">
-        <ng-content></ng-content>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </mat-toolbar>
+    <mat-progress-bar *ngIf="routeLoading"
+                      color="warn"
+                      mode="indeterminate"></mat-progress-bar>
+    <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav
+                     [opened]="sidebarOpen"
+                     [mode]="mobileQuery.matches ? 'over' : 'side'"
+                     [fixedInViewport]="mobileQuery.matches"
+                     fixedTopGap="56">
+            <mat-nav-list>
+                <app-nav-item *ngFor="let navItem of routes"
+                              [item]="navItem"></app-nav-item>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="sidenav-content">
+                <ng-content></ng-content>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>
 <app-notifications></app-notifications>
