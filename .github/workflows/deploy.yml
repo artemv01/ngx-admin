@@ -41,8 +41,8 @@ jobs:
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avz --delete
-          path: ./dist/ngx-admin
-          remote_path: /home/ubuntu/ngx-admin
+          path: ./dist/ngx-admin/
+          remote_path: /home/ubuntu/ngx-admin/
           remote_host: ${{ secrets.SSH_HOST }}
           remote_port: ${{ secrets.SSH_PORT }}
           remote_user: ${{ secrets.SSH_USER }}
