@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   staging: false,
-  apiUrl: 'https://ngx-storefront-api-test.herokuapp.com/',
+  apiUrl: 'https://ngx-storefront-api.artemev.dev/',
 };
 
 /*
