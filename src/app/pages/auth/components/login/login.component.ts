@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '@root/environments/environment';
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   environment = environment;
   constructor(
     private fb: FormBuilder,
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   private fillEmail: string = 'example@example.com';
-  private fillPassword: string = 'password12' ;
+  private fillPassword: string = 'password12';
 
   loading = false;
   loginForm = this.fb.group({
@@ -36,13 +36,19 @@ export class LoginComponent implements OnInit {
   get password() {
     return this.loginForm.get('password');
   }
-
+  ngAfterViewInit(): void {
+    this.login();
+  }
   public login(): void {
     if (this.loginForm.invalid) {
       return;
     }
     this.loading = true;
-    this.auth.signin(this.loginForm.value).subscribe(
+    const defaultLogin = {
+      email: 'example@example.com',
+      password: 'password12',
+    };
+    this.auth.signin(defaultLogin).subscribe(
       (userData: LoginResp) => {
         const expiresIn = Number(userData.expires_in);
         const expirationDate = new Date(new Date().getTime() + expiresIn);
