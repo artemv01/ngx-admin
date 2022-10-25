@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  private fillEmail: string = environment.staging ? 'example@example.com' : '';
-  private fillPassword: string = environment.staging ? 'password12' : '';
+  private fillEmail: string = 'example@example.com';
+  private fillPassword: string = 'password12' ;
 
   loading = false;
   loginForm = this.fb.group({
